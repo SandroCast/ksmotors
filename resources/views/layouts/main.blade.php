@@ -36,7 +36,7 @@
                 <nav id="partesuperior">
                     <a href="/"><strong>3D</strong>PrintEvolution</a>
                     @auth
-                        <a onclick="event.preventDefault(); conf_mini()" href="#" ><img class="imgperfil" style="float: right; font-size: 15px; border-radius: 50%; margin: 5px 10px;" src="img/usuarios/sandrocastro.jpg" alt="Perfil"></a>
+                        <a onclick="event.preventDefault(); conf_mini()" href="#" ><img class="imgperfil" style="float: right; font-size: 15px; border-radius: 50%; margin: 5px 10px;" src="" alt="Perfil"></a>
                         <div class="card col-md-12" id="config">
 
                             <img class="imgconfig" style="border-radius: 50%; margin: 5px 35px;" src="img/usuarios/sandrocastro.jpg" alt="Perfil">
