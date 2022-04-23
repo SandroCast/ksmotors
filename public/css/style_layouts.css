@@ -1,0 +1,94 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Source Sans Pro', Helvetica, sans-serif;
+    background-color: #ecf0f5;
+}
+
+#main-header {
+    background-image: linear-gradient(black, rgba(0, 0, 0, 0));
+    height: 100px;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+}
+
+#navbartop {
+    transition: 250ms;
+}
+#navbartop:hover {
+    margin-top: 0 !important;
+    background-color: black !important;
+}
+
+#partesuperior > a{
+    text-decoration: none;
+    padding: 5px 15px;
+    font-size: 20px;
+    color: white;
+}
+
+#menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+#menu ul li {
+    display: inline;
+    
+}
+#menu ul li a {
+    color: #FFF;
+    padding: 20px;
+    display: inline-block;
+    text-decoration: none;
+    transition: .4s; 
+}
+#menu ul li a:hover {
+    color: aqua;
+}
+#config {
+    display: none;
+    position: fixed;
+    top: 40px;
+    right: 0;
+    background-color: #E9F0F8;
+    width: 150px;
+    padding: 0;
+}
+#config ul{
+    padding: 0;
+}
+
+#config ul li{
+    list-style: none;
+    padding: 15px 0px;
+
+}
+#config ul li a{
+    position: fixed;
+    text-decoration: none;
+    list-style: none;
+    color: black;
+    width: 100%;
+    padding: 0 30px;
+}
+#config ul li a:hover{
+    color: white;
+   background-color: #284D5D;
+
+}
+
+.imgperfil{
+    width: 30px;
+    object-fit: cover;
+}
+.imgconfig{
+    width: 80px;
+    object-fit: cover;
+}
