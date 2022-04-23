@@ -40,7 +40,6 @@
                         <div class="card col-md-12" id="config">
 
                             <img class="imgconfig" style="border-radius: 50%; margin: 5px 35px;" src="img/usuarios/sandrocastro.jpg" alt="Perfil">
-
                             <ul>
                                 <li><a href="/user/profile">Meu Perfil</a></li>
                                 <li><a href="/product/favorite">Favoritos</a></li>
