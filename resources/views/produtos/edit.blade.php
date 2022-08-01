@@ -41,6 +41,10 @@
 
     <div id="product-create-container" class="col-md-6 offset-md-3">
         <h1>Editando: {{ $product->title }}</h1>
+        <h5>URL Processando Pagamento:<br>
+            /teste/{{$product->id}}</h5>
+        <h5>URL Pagamento Finalizado:<br>
+            /teste2/{{$product->id}}</h5>
         <form action="/product/update/{{ $product->id }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -53,15 +57,19 @@
             </div>
             <div class="form-group">
                 <label for="title">Titulo do Produto:</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder="Nome do produto" value="{{ $product->title }}">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Nome do produto" value="{{ $product->title }}" required>
             </div>
             <div class="form-group">
                 <label for="title">Descrição do Produto:</label>
-                <textarea name="description" id="description" class="form-control" placeholder="Fale um pouco sobre o deu produto">{{ $product->description }}</textarea>
+                <textarea name="description" id="description" class="form-control" placeholder="Fale um pouco sobre o deu produto" required>{{ $product->description }}</textarea>
             </div>
             <div class="form-group">
                 <label for="title">Preço do Produto:</label>
-                <input type="number" class="form-control" id="preco" name="preco" placeholder="Qual o valor do produto?" value="{{ $product->preco }}">
+                <input type="number" class="form-control" id="preco" name="preco" placeholder="Qual o valor do produto?" value="{{ $product->preco }}" required>
+            </div>
+            <div class="form-group">
+                <label for="title">Token ID Butão de Pagamento:</label>
+                <input type="text" class="form-control" id="token_pagamento" name="token_pagamento" placeholder="Token Pagamento" value="{{ $product->token_pagamento }}" required>
             </div>
             <input type="submit" class="btn btn-primary" value="Guardar">
         </form>

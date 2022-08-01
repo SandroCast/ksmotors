@@ -1,8 +1,20 @@
 <x-guest-layout>
+    <img id="imgfundo" src="/img/fundo.png" alt="" style="height: 100%; position: absolute; opacity : 0.9;">
+
+    <style>
+        .w-full{
+            z-index: 1;
+        }
+
+        #imgfundo{
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <img src="" alt="">
-            <x-jet-authentication-card-logo />
+            {{--  <x-jet-authentication-card-logo />  --}}
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
@@ -49,7 +61,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
+                    {{ __('Já tenho uma conta') }}
                 </a>
 
                 <x-jet-button class="ml-4">

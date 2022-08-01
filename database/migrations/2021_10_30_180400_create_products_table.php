@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->decimal('preco');
             $table->string('image');
+            $table->text('token_pagamento')->nullable();
             $table->timestamps();
 
         });

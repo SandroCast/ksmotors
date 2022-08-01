@@ -1,11 +1,24 @@
 <x-guest-layout>
+    <img id="imgfundo" src="/img/fundo.png" alt="" style="height: 100%; position: absolute; opacity : 0.9;">
+
+    <style>
+        .w-full{
+            z-index: 1;
+        }
+
+        #imgfundo{
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
     <x-jet-authentication-card>
         <x-slot name="logo">
             <x-jet-authentication-card-logo />
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+            {{ __('Esqueceu sua senha? Sem problemas. Basta nos informar seu endereço de e-mail e nós lhe enviaremos um link de redefinição de senha que permitirá que você escolha uma nova.') }}
         </div>
 
         @if (session('status'))

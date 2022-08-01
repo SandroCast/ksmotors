@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Models\Product;
 use App\Models\Favorite;
+use App\Models\Like;
 use App\Models\User;
+use BaconQrCode\Renderer\Color\Rgb;
 
 class ProductController extends Controller
 {
@@ -38,7 +40,7 @@ class ProductController extends Controller
 
     }
 
-    public function favoritos()
+    public function favorito(Request $request)
     {
         $user = auth()->user();
 
@@ -51,7 +53,7 @@ class ProductController extends Controller
     {
         Favorite::findOrFail($id)->delete();
 
-        return redirect('/product/favorite')->with('msg', 'Produto removidodos favoritos com sucesso!');
+        return redirect('/favorito')->with('msg', 'Produto removidodos favoritos com sucesso!');
 
     }
 
@@ -59,7 +61,12 @@ class ProductController extends Controller
     {
         $user = auth()->user();
 
-        return view('produtos.create', ['user' => $user]);
+        if($user->adms > 0){
+            return view('produtos.create', ['user' => $user]);
+        }else{
+            return redirect('/');
+        }
+
     }
 
     public function store(Request $request)
@@ -91,7 +98,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect('/product/dashboard')->with('msg', 'Produto adicionado com sucesso!');
+        return redirect('/product/edit/'.$product->id)->with('msg', 'Produto adicionado com sucesso!');
 
       //
     }
@@ -130,23 +137,39 @@ class ProductController extends Controller
 
         Product::findOrFail($request->id)->update($data);
 
-        return redirect('/product/dashboard')->with('msg', 'Produto editado com sucesso!');
+        return redirect('/produtos')->with('msg', 'Produto editado com sucesso!');
 
     }
 
     public function destroy($id)
     {
+        $likes = Like::where('product_id', $id)->get();
+        foreach($likes as $like){
+            $like->delete();
+        }
+
+        $favorites = Favorite::where('product_id', $id)->get();
+        foreach($favorites as $favorite){
+            $favorite->delete();
+        }
+
         Product::findOrFail($id)->delete();
 
-        return redirect('/product/dashboard')->with('msg', 'Produto excluido com sucesso!');
+        return redirect('/produtos')->with('msg', 'Produto excluido com sucesso!');
     }
 
     public function dashboard()
     {
         $user = auth()->user();
-        $products = Product::all();
 
-        return view('produtos.dashboard', ['user' => $user, 'products' => $products]);
+        if($user->adms > 0){
+            $products = Product::all();
+            return view('produtos.dashboard', ['user' => $user, 'products' => $products]);
+        }else{
+            return redirect('/');
+        }
+
+
     }
 
     public function joinProduct($id)
@@ -173,8 +196,62 @@ class ProductController extends Controller
 
     }
 
+    public function usuarios()
+    {
+        $user = auth()->user();
 
+        if($user->adms > 1){
 
+            $users = User::where('id', '>', 0)->orderBy('adms', 'desc')->get();
+
+            return view('usuarios', compact('users', 'user'));
+        }else{
+            return redirect('/');
+        }
+
+    }
+
+    public function usuario_acao_promover($id, Request $request)
+    {
+        $user = User::findOrFail($id);
+
+        if($user->adms < 2){
+            $user->adms = $user->adms + 1;
+            $user->save();
+        }
+
+        return redirect()->back();
+
+    }
+    public function usuario_acao_rebaixar($id, Request $request)
+    {
+        $user = User::findOrFail($id);
+
+        if($user->adms > 0){
+        $user->adms = $user->adms - 1;
+        $user->save();
+        }
+
+        return redirect()->back();
+
+    }
+
+    public function removeFotoPerfil($id)
+    {
+        $user = auth()->user();
+
+        if($id == $user->id){
+
+            $update = User::findOrFail($id);
+            $update->profile_photo_path = null;
+            $update->save();
+
+            return redirect()->back();
+        }else{
+            return redirect('/');
+        }
+    }
+    
 
 
 }

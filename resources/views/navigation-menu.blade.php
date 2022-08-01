@@ -6,7 +6,8 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-9 w-auto" />
+                        <img @if(Auth::user()->profile_photo_path != null) src="/storage/{{ Auth::user()->profile_photo_path }}" @else src="{{ Auth::user()->profile_photo_url }}" @endif class="rounded-full block h-9 w-auto object-cover">
+                        {{--  <x-jet-application-mark class="block h-9 w-auto" />  --}}
                     </a>
                 </div>
 

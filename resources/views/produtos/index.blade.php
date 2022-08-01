@@ -77,8 +77,9 @@
                     <p><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ count($product->users) }}</p>
                     <div>
 
-
-                        <a id="id" class="btn btn-primary" href="#">Comprar</a>
+                        <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js"
+                            data-preference-id="{{$product->token_pagamento}}" data-source="button">
+                        </script>
                         
                         @auth
                         @php $usua = $favoritos->where('product_id', $product->id)->first(); @endphp
