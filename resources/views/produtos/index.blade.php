@@ -74,13 +74,15 @@
                     <img class='imgresult img-thumbnail' alt='Foto' src='/img/produtos/{{ $product->image }}'>
        
                     <h5 class="card-title">{{ $product->title }}</h5>
+                    <h4 style="color: rgba(16, 185, 129);" class="card-title">{{'R$'.number_format($product->preco, 2, ',', '.')}}</h4>
                     <p><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ count($product->users) }}</p>
                     <div>
 
-                        <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js"
+                        {{--  <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js"
                             data-preference-id="{{$product->token_pagamento}}" data-source="button">
-                        </script>
-                        
+                        </script>  --}}
+                        <a id="id" class="btn btn-primary" href="#">Mais</a>
+
                         @auth
                         @php $usua = $favoritos->where('product_id', $product->id)->first(); @endphp
                         @endauth

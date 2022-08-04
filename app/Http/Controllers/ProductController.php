@@ -8,7 +8,10 @@ use App\Models\Product;
 use App\Models\Favorite;
 use App\Models\Like;
 use App\Models\User;
+use App\Models\FotoProduto;
 use BaconQrCode\Renderer\Color\Rgb;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class ProductController extends Controller
 {
@@ -71,32 +74,34 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        $user = auth()->user();
 
         $product = new Product;
 
         $product->title = $request->title;
         $product->description = $request->description;
         $product->preco = $request->preco;
+        $product->user_id = $user->id;
+        $product->save();
 
         //Image Upload
-        if($request->hasFile('image') && $request->file('image')->isValid()) {
+        if($request->image) {
 
-            $requestImage = $request->image;
+            foreach($request['image'] as $imagem){
 
-            $extension = $requestImage->extension();
+                $requestImage = $imagem;
+                $extension = $requestImage->extension();
+                $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
+                $requestImage->move(public_path('img/produtos'), $imageName);
 
-            $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
+                $fotoProduto = new FotoProduto;
+                $fotoProduto->id_produto = $product->id;
+                $fotoProduto->path = $imageName;
+                $fotoProduto->save();
 
-            $requestImage->move(public_path('img/produtos'), $imageName);
-
-            $product->image = $imageName;
+            }
 
         }
-
-        $user = auth()->user();
-        $product->user_id = $user->id;
-
-        $product->save();
 
         return redirect('/product/edit/'.$product->id)->with('msg', 'Produto adicionado com sucesso!');
 
@@ -118,24 +123,39 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->all();
-
+        $user = auth()->user();
+        
         //Image Upload
-        if($request->hasFile('image') && $request->file('image')->isValid()) {
+        if($request->image) {
 
-            $requestImage = $request->image;
+            $apagarFotos  = FotoProduto::where('id_produto', $request->id)->get();
+            foreach($apagarFotos as $apagarFoto){
+                $apagarFoto->delete();
+            }
 
-            $extension = $requestImage->extension();
+            foreach($request['image'] as $imagem){
 
-            $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
+                $requestImage = $imagem;
+                $extension = $requestImage->extension();
+                $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
+                $requestImage->move(public_path('img/produtos'), $imageName);
 
-            $requestImage->move(public_path('img/produtos'), $imageName);
+                $fotoProduto = new FotoProduto;
+                $fotoProduto->id_produto = $request->id;
+                $fotoProduto->path = $imageName;
+                $fotoProduto->save();
 
-            $data['image'] = $imageName;
+            }
 
         }
 
-        Product::findOrFail($request->id)->update($data);
+        $product = Product::findOrFail($request->id);
+        $product->title = $request->title;
+        $product->description = $request->description;
+        $product->preco = $request->preco;
+        $product->token_pagamento = $request->token_pagamento;
+        $product->user_id = $user->id;
+        $product->save();
 
         return redirect('/produtos')->with('msg', 'Produto editado com sucesso!');
 
@@ -151,6 +171,11 @@ class ProductController extends Controller
         $favorites = Favorite::where('product_id', $id)->get();
         foreach($favorites as $favorite){
             $favorite->delete();
+        }
+
+        $fotos = FotosProdutos::where('id_produto', $id)->get();
+        foreach($fotos as $foto){
+            $foto->delete();
         }
 
         Product::findOrFail($id)->delete();
@@ -251,6 +276,80 @@ class ProductController extends Controller
             return redirect('/');
         }
     }
+
+
+    public function emailEnvia()
+    {
+
+        $codigo = rand(1000, 9999);
+        $email = '';
+        
+        $this->emailVerifica($codigo, $email);
+
+
+
+        $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
+
+        try {
+
+            $mail->CharSet = 'UTF-8';
+            //Server settings
+            $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+            $mail->isSMTP();                                      // Set mailer to use SMTP
+            //$mail->isMail();                                      // Set mailer to use SMTP
+            $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+            $mail->SMTPAuth = true;                               // Enable SMTP authentication
+            $mail->Username = 'castrosandro2@gmail.com';                 // SMTP username
+            $mail->Password = 'aiafiyemleynwuhe';                           // SMTP password
+            $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = 587;                                    // TCP port to connect to
+
+            //Recipients
+            $mail->setFrom('castrosandro2@gmail.com', '3DPrintEvolution');
+
+            $mail->addAddress($email);               // Name is optional
+            //$mail->addReplyTo('info@example.com', 'Information');
+            //$mail->addCC('cc@example.com');
+            // $mail->addBCC('fabio@oncore.com.br');
+            // $mail->AddAttachment($nome_excel);
+            //Content
+            $mail->isHTML(true);                                  // Set email format to HTML
+            $mail->Subject = 'Verificação de Email';
+            $mail->Body    = '<p>Olá,</p>
+
+            <p>Seu código de verificação é:</p>
+            <br>
+            <h1 style="color: green; font-weight: bold; text-align: center; font-size: 50px;">'.$codigo.'</h1>';
+
+            //web$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+            $mail->send();
+
+
+        } catch (Exception $e) {
+
+
+            echo '<br>Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+        }   
+
+
+    }
+
+
+    public function time($id)
+    {
+
+        if($id <= 300){
+            $tempo = date('i:s', 300 - $id);
+        }else{
+            $tempo = date('i:s', 300 - 300);
+        } 
+
+        return $tempo;
+
+    }
+
+    
     
 
 

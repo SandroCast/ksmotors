@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\Product;
 
@@ -44,3 +45,4 @@ Route::post('/usuarios/rebaixar/{id}', [ProductController::class, 'usuario_acao_
 
 Route::get('/remove/foto/perfil/{id}', [ProductController::class, 'removeFotoPerfil'])->middleware('auth');
 
+Route::get('/time/{id}', [ProductController::class, 'time']);

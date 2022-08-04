@@ -15,6 +15,11 @@ class AddAdmsToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('adms')->nullable();
+            $table->boolean('email_verificado')->nullable();
+            $table->integer('cod_verificacao')->nullable();
+            $table->integer('erro_verificacao')->nullable();
+            $table->integer('telefone')->nullable();
+            $table->text('endereco')->nullable();
         });
     }
 

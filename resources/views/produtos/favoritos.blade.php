@@ -82,10 +82,11 @@
                     <img class='imgresult  img-thumbnail' alt='Foto' src='/img/produtos/{{$produto->produto->image}}'>
        
                     <h5 class="card-title">{{$produto->produto->title}}</h5>
+                    <h4 style="color: rgba(16, 185, 129);" class="card-title">{{'R$'.number_format($produto->produto->preco, 2, ',', '.')}}</h4>
                     <p><i class="fa fa-thumbs-up" aria-hidden="true"></i>{{ count($produto->produto->users) }}</p>
                     <div>
 
-                        <a id="id" class="btn btn-primary" href="#">Detalhes</a>
+                        <a id="id" class="btn btn-primary" href="#">Mais</a>
 
                         <form class="opc" action="/product/favorite/remove/{{$produto->id}}" method="post">
                             @csrf

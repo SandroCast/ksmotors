@@ -54,6 +54,7 @@
                     <th scope="col">Produto</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Preço</th>
+                    <th scope="col">Token</th>
                     <th class="text-center" scope="col">Imagem</th>
                     <th scope="col">Ações</th>
                 </tr>
@@ -66,7 +67,7 @@
                         <td class="align-middle"><a href="{{ $product->id }}">{{ $product->title }}</a></td>
                         <td class="align-middle">{{ $product->description }}</td>
                         <td class="align-middle">{{ $product->preco }}</td>
-
+                        <td class="align-middle">{{ $product->token_pagamento }}</td>
                         <td class="align-middle text-center"><img style="max-height: 50px;" src="/img/produtos/{{$product->image}}" alt=""></td>
 
                         <td class="d-flex align-middle">

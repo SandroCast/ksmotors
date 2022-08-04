@@ -45,7 +45,7 @@
             @csrf
             <div class="form-group">
                 <label for="image">Imagem do Produto:</label>
-                <input type="file" name="image" id="image" class="from-control-file" required>
+                <input type="file" name="image[]" id="image" class="from-control-file" required multiple>
             </div>
             <div class="form-group">
                 <label for="title">Titulo do Produto:</label>
@@ -57,7 +57,7 @@
             </div>
             <div class="form-group">
                 <label for="title">Preço do Produto:</label>
-                <input type="number" class="form-control" id="preco" name="preco" placeholder="Qual o valor do produto?" required>
+                <input type="text" class="form-control" id="preco" name="preco" placeholder="Qual o valor do produto?" required>
             </div>
             <input type="submit" class="btn btn-primary" value="Adicionar Produto">
         </form>

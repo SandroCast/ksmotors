@@ -50,7 +50,7 @@
             @method('PUT')
             <div class="form-group">
                 <label for="image">Imagem do Produto:</label>
-                <input type="file" name="image" id="image" class="from-control-file">
+                <input type="file" name="image[]" id="image" class="from-control-file" multiple>
                 <div class="text-center m-3">
                 <img class="img-thumbnail" src="/img/produtos/{{ $product->image }}" alt="{{ $product->title }}">
                 </div>
@@ -65,7 +65,7 @@
             </div>
             <div class="form-group">
                 <label for="title">Preço do Produto:</label>
-                <input type="number" class="form-control" id="preco" name="preco" placeholder="Qual o valor do produto?" value="{{ $product->preco }}" required>
+                <input type="text" class="form-control" id="preco" name="preco" placeholder="Qual o valor do produto?" value="{{ $product->preco }}" required>
             </div>
             <div class="form-group">
                 <label for="title">Token ID Butão de Pagamento:</label>
