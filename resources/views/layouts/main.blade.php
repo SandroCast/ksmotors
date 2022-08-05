@@ -40,7 +40,7 @@
                 top:50%;
                 left:50%;
                 margin-left: -140px;
-                margin-top: -180px;
+                margin-top: -190px;
                 display: flex;
                 z-index: 3;
                 text-align: center;
@@ -65,36 +65,41 @@
                         overflow: hidden;
                     }
                     #main-header{
-                        margin-top: -180px;
+                        margin-top: -190px;
                     }
                     #conteudo{
-                        margin-top: -180px;
+                        margin-top: -190px;
                     }
 
                 </style>
                 <img id="imgVerificaEmail" src="/img/fundopreto.png" alt="">
                 <div id="formVerificaEmail" class="card col-md-5">
                     <p>Enviamos um código em seu email. <br> Digite-o abaixo para continuar seu cadastro.</p>
-                    <form action="/" method="POST" enctype="multipart/form-data">
-                        @csrf
+                    <form action="/cancela/cadastro" method="GET" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="title"><b>CÓDIGO</b></label><br>
-                            <input id="inp1" onkeydown="digitar1()" autofocus style="width: 40px; text-align: center; display: inline;" type="text" class="form-control" name="title" maxlength="1" required>
-                            <input id="inp2" onkeydown="digitar2()" style="width: 40px; text-align: center; display: inline;" type="text" class="form-control" name="title" maxlength="1" required>
-                            <input id="inp3" onkeydown="digitar3()" style="width: 40px; text-align: center; display: inline;" type="text" class="form-control" name="title" maxlength="1" required>
-                            <input id="inp4" onkeydown="digitar4()" style="width: 40px; text-align: center; display: inline;" type="text" class="form-control" name="title" maxlength="1" required>
+                            <input id="inp1" onkeydown="digitar1()" autofocus style="width: 40px; text-align: center; display: inline;" type="text" class="form-control" name="codigo_1" maxlength="1" required>
+                            <input id="inp2" onkeydown="digitar2()" style="width: 40px; text-align: center; display: inline;" type="text" class="form-control" name="codigo_2" maxlength="1" required>
+                            <input id="inp3" onkeydown="digitar3()" style="width: 40px; text-align: center; display: inline;" type="text" class="form-control" name="codigo_3" maxlength="1" required>
+                            <input id="inp4" onkeydown="digitar4()" style="width: 40px; text-align: center; display: inline;" type="text" class="form-control" name="codigo_4" maxlength="1" required>
                         </div>
-                        <br>
-                        <p>Após a terceira verificação incorreta ou <br> fim do tempo de virificação, você será redirecionado para a home do site.</p>
+                        @php
+                            $tentativas = 3 - $user->erro_verificacao;
+                        @endphp
+                        <p style="color: green">Retam {{$tentativas}} tentativas</p>
+                        
+                        <p>Após a terceira verificação incorreta ou <br> fim do tempo de verificação, você será redirecionado para a home do site.</p>
                         
                         <p id="time"></p>
 
                         <div class="form-group mt-4">
-                            <a class="btn btn-danger pull-left" href="#">Cancelar</a>
                             <input type="submit" class="btn btn-primary pull-right" value="Verificar">
-                        </div>
-
                     </form>
+                    <form action="/cancela/cadastro" method="GET" enctype="multipart/form-data">
+                            <input type="submit" class="btn btn-danger pull-left" value="Cancelar">
+                        </div>
+                    </form>
+                    
                     
                 </div>
                
@@ -155,6 +160,9 @@
                             if (req.readyState == 4 && req.status == 200) {
                                 document.getElementById('time').innerHTML = req.responseText;
                             }
+                        }
+                        if(tempo >= 300){
+                            location.href = '/cancela/cadastro';
                         }
                         tempo = tempo + 1;
                         req.open('GET', '/time/'+tempo, true);

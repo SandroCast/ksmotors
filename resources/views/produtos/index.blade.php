@@ -71,10 +71,13 @@
         @foreach ($products as $product)
             <div class="col-md-3">
                 <div class="card col-md-12" id="{{$product->id}}">
-                    <img class='imgresult img-thumbnail' alt='Foto' src='/img/produtos/{{ $product->image }}'>
+                    @php
+                        $imgs = \App\Models\FotoProduto::where('id_produto', $product->id)->first();
+                    @endphp
+                    <img class='imgresult img-thumbnail' alt='Foto' src='/img/produtos/{{ $imgs->path }}'>
        
                     <h5 class="card-title">{{ $product->title }}</h5>
-                    <h4 style="color: rgba(16, 185, 129);" class="card-title">{{'R$'.number_format($product->preco, 2, ',', '.')}}</h4>
+                    <h5 style="color: rgb(0, 126, 84);" class="card-title">{{'R$'.number_format($product->preco, 2, ',', '.')}}</h5>
                     <p><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ count($product->users) }}</p>
                     <div>
 

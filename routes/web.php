@@ -46,3 +46,7 @@ Route::post('/usuarios/rebaixar/{id}', [ProductController::class, 'usuario_acao_
 Route::get('/remove/foto/perfil/{id}', [ProductController::class, 'removeFotoPerfil'])->middleware('auth');
 
 Route::get('/time/{id}', [ProductController::class, 'time']);
+
+Route::get('/cancela/cadastro', [ProductController::class, 'cancela_cadastro'])->middleware('auth');
+
+

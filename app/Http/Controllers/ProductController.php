@@ -349,6 +349,39 @@ class ProductController extends Controller
 
     }
 
+    public function cancela_cadastro(Request $request)
+    {
+        $userID = auth()->user();
+        $user = User::findOrFail($userID->id);
+
+        if($user->email_verificado == null){
+
+            if(isset($request->codigo_1)){
+
+                if($request->codigo_1.$request->codigo_2.$request->codigo_3.$request->codigo_4 == $user->cod_verificacao){
+                    $user->email_verificado = 1;
+                    $user->save();
+                }else{
+                    
+                    if($user->erro_verificacao == 2){
+                        $user->delete();
+                        return redirect('/register');
+                    }else{
+                        $user->erro_verificacao = $user->erro_verificacao + 1;
+                        $user->save();
+                    }
+
+                }
+            }else{
+                $user->delete();
+                return redirect('/register');
+            }
+        }
+
+        return redirect('/');
+
+    }
+
     
     
 
