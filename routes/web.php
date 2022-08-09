@@ -49,4 +49,7 @@ Route::get('/time/{id}', [ProductController::class, 'time']);
 
 Route::get('/cancela/cadastro', [ProductController::class, 'cancela_cadastro'])->middleware('auth');
 
+Route::get('/produto/{id}', [ProductController::class, 'show'])->middleware('auth');
+
+
 

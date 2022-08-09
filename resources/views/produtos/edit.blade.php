@@ -29,6 +29,12 @@
         .btn-primary {
             margin-top: 15px;
         }
+        .imgresult {
+            height: 200px !important;
+            width: 100% !important;
+            object-fit: cover !important;
+
+        }
     </style>
 
 @section('content')
@@ -52,7 +58,51 @@
                 <label for="image">Imagem do Produto:</label>
                 <input type="file" name="image[]" id="image" class="from-control-file" multiple>
                 <div class="text-center m-3">
-                <img class="img-thumbnail" src="/img/produtos/{{ $product->image }}" alt="{{ $product->title }}">
+
+                    @php
+                        $fotos = \App\Models\FotoProduto::where('id_produto', $product->id)->get();
+                    @endphp
+
+                    {{--  <!-- Carousel container -->  --}}
+                    <div id="my-pics" class="carousel slide" data-ride="carousel">
+
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            @for($i = 0; $i < count($fotos); $i++)
+                                <li data-target="#my-pics" data-slide-to="{{$i}}" class="indicadores @if($i == 0) {{'active'}} @endif"></li>
+                            @endfor
+
+                        </ol>
+                        
+                        <!-- Content -->
+                        <div class="carousel-inner" role="listbox">
+                        
+                            @php $cont = 0; @endphp
+                            <!-- Slide 1 -->
+                            @foreach ($fotos as $foto)
+
+                                <div class="item @if($cont < 1) {{'active'}} @endif">
+                                    <img src="/img/produtos/{{$foto->path}}" class="imgresult img-thumbnail"  alt="">
+                                </div>
+
+                                @php $cont ++; @endphp
+                            @endforeach
+
+                        </div>
+                        
+                        <!-- Previous/Next controls -->
+                        <a class="left carousel-control" href="#my-pics" role="button" data-slide="prev">
+                            <span class="icon-prev" aria-hidden="true"></span>
+                            <span class="sr-only">Anterior</span>
+                        </a>
+                        <a class="right carousel-control" href="#my-pics" role="button" data-slide="next">
+                            <span class="icon-next" aria-hidden="true"></span>
+                            <span class="sr-only">Próximo</span>
+                        </a>
+                        
+                    </div>
+                    {{--  <!-- Carousel container -->  --}}
+
                 </div>
             </div>
             <div class="form-group">

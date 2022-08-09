@@ -33,6 +33,13 @@
 
         }
 
+        .imgresult {
+            height: 50px !important;
+            width: 100% !important;
+            object-fit: cover !important;
+
+        }
+
     </style>
 
 @section('content')
@@ -62,13 +69,16 @@
         
             <tbody>
                 @foreach ($products as $product)
+                    @php
+                        $image = \App\Models\FotoProduto::where('id_produto', $product->id)->first();
+                    @endphp
                     <tr>
                         <td scropt="row" class="align-middle">{{ $loop->index + 1 }}</td>
-                        <td class="align-middle"><a href="{{ $product->id }}">{{ $product->title }}</a></td>
+                        <td class="align-middle"><a href="/produto/{{ $product->id }}">{{ $product->title }}</a></td>
                         <td class="align-middle">{{ $product->description }}</td>
                         <td class="align-middle">{{ $product->preco }}</td>
                         <td class="align-middle">{{ $product->token_pagamento }}</td>
-                        <td class="align-middle text-center"><img style="max-height: 50px;" src="/img/produtos/{{$product->image}}" alt=""></td>
+                        <td class="align-middle text-center"><img class="imgresult" src="/img/produtos/{{$image->path}}" alt=""></td>
 
                         <td class="d-flex align-middle">
                         <a style="margin-right: 5px;" href="/product/edit/{{ $product->id }}" class="btn btn-info edit-btn"><ion-icon name="create-outline"></ion-icon> Editar</a>

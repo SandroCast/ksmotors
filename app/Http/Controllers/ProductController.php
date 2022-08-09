@@ -110,7 +110,13 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        //
+        $user = auth()->user();
+
+        $fotos = FotoProduto::where('id_produto', $id)->get();
+        $produto = Product::findOrFail($id);
+        
+        return view('produtos.show', compact('user', 'fotos', 'produto'));
+
     }
 
     public function edit($id)

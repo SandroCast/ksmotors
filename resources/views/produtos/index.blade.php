@@ -28,9 +28,9 @@
             padding: 10px;
         }
         .imgresult {
-            height: 200px;
-            width: 100%;
-            object-fit: cover;
+            height: 200px !important;
+            width: 100% !important;
+            object-fit: cover !important;
 
         }
         .btn-primary{
@@ -42,6 +42,7 @@
             padding: 0px 5px;
             float: right;
             line-height: 30px;
+            margin: 0;
         }
 
 
@@ -72,19 +73,55 @@
             <div class="col-md-3">
                 <div class="card col-md-12" id="{{$product->id}}">
                     @php
-                        $imgs = \App\Models\FotoProduto::where('id_produto', $product->id)->first();
+                        $fotos = \App\Models\FotoProduto::where('id_produto', $product->id)->get();
                     @endphp
-                    <img class='imgresult img-thumbnail' alt='Foto' src='/img/produtos/{{ $imgs->path }}'>
+
+                    {{--  <!-- Carousel container -->  --}}
+                    <div id="my-pics{{$product->id}}" class="carousel slide" data-ride="carousel">
+
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            @for($i = 0; $i < count($fotos); $i++)
+                                <li data-target="#my-pics{{$product->id}}" data-slide-to="{{$i}}" class="indicadores @if($i == 0) {{'active'}} @endif"></li>
+                            @endfor
+
+                        </ol>
+                        
+                        <!-- Content -->
+                        <div class="carousel-inner" role="listbox">
+                        
+                            @php $cont = 0; @endphp
+                            <!-- Slide 1 -->
+                            @foreach ($fotos as $foto)
+
+                                <div class="item @if($cont < 1) {{'active'}} @endif">
+                                    <img src="/img/produtos/{{$foto->path}}" class="imgresult img-thumbnail"  alt="">
+                                </div>
+
+                                @php $cont ++; @endphp
+                            @endforeach
+
+                        </div>
+                        
+                        <!-- Previous/Next controls -->
+                        <a class="left carousel-control" href="#my-pics{{$product->id}}" role="button" data-slide="prev">
+                            <span class="icon-prev" aria-hidden="true"></span>
+                            <span class="sr-only">Anterior</span>
+                        </a>
+                        <a class="right carousel-control" href="#my-pics{{$product->id}}" role="button" data-slide="next">
+                            <span class="icon-next" aria-hidden="true"></span>
+                            <span class="sr-only">Próximo</span>
+                        </a>
+                        
+                    </div>
+                    {{--  <!-- Carousel container -->  --}}
        
                     <h5 class="card-title">{{ $product->title }}</h5>
                     <h5 style="color: rgb(0, 126, 84);" class="card-title">{{'R$'.number_format($product->preco, 2, ',', '.')}}</h5>
                     <p><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ count($product->users) }}</p>
                     <div>
 
-                        {{--  <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js"
-                            data-preference-id="{{$product->token_pagamento}}" data-source="button">
-                        </script>  --}}
-                        <a id="id" class="btn btn-primary" href="#">Mais</a>
+                        <a id="id" class="btn btn-primary" href="/produto/{{$product->id}}">Mais</a>
 
                         @auth
                         @php $usua = $favoritos->where('product_id', $product->id)->first(); @endphp
