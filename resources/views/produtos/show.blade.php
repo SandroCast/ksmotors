@@ -135,7 +135,7 @@
                 <p style="color: #999">503 vendidos</p>
                 <h3>{{$produto->title}}</h3>
                 <h5>{{$produto->description}}</h5>
-                <h1>R$5000</h1>
+                <h1>{{'R$'.number_format($produto->preco, 2, ',', '.')}}</h1>
 
                 
 
@@ -143,8 +143,12 @@
                     data-preference-id="{{$produto->token_pagamento}}" data-source="button">
                 </script>
 
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        $(".mercadopago-button").html('Comprar');
+                    })
+                </script>
 
-                
 
             </div>
 
