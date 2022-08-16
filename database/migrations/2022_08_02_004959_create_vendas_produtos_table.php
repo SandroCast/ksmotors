@@ -17,7 +17,7 @@ class CreateVendasProdutosTable extends Migration
             $table->id();
             $table->integer('id_produto');
             $table->integer('id_user');
-            $table->text('status');
+            $table->string('status');
             $table->timestamps();
         });
     }

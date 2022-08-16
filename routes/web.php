@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Mail;
 
 use App\Models\Product;
@@ -52,4 +53,16 @@ Route::get('/cancela/cadastro', [ProductController::class, 'cancela_cadastro'])-
 Route::get('/produto/{id}', [ProductController::class, 'show'])->middleware('auth');
 
 
+
+
+
+
+Route::get('/chat/home', [MessageController::class, 'home']);
+
+Route::get('/chat', [MessageController::class, 'index']);
+Route::get('/chat/{id}', [MessageController::class, 'conversas']);
+Route::get('/chat/novo/{id}', [MessageController::class, 'nova_conversa']);
+Route::get('/load', [MessageController::class, 'load']);
+Route::get('/conversa/{id}', [MessageController::class, 'load_conversas']);
+Route::post('/enviar/{id}', [MessageController::class, 'update']);
 

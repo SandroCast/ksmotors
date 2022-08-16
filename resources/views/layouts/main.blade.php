@@ -38,32 +38,24 @@
         <script src="/js/script.js"></script>
 
         <style>
-            #imgVerificaEmail{
-                margin:0;
-                padding:0;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                position: fixed;
-                opacity : 0.9;
-                z-index: 2;
+            #notificacao{
+                position: relative;
+                font-size: 17px;
+                color: deepskyblue;
+                left: -5px;
+                top: -10px;
             }
-            #formVerificaEmail{
-                width: 300px;
-                top:50%;
-                left:50%;
-                margin-left: -140px;
-                margin-top: -190px;
-                display: flex;
-                z-index: 3;
-                text-align: center;
-                padding: 5px;
+            #numeroNotify{
+                position: relative;
+                top: -2px;
+                left: -10px;
+                color: white;
+                font-size: 12px;
+                
+                
             }
-            #time{
-                color: red;
-            }
-
         </style>
+
     </head>
 
     <body onload="srl(@if(session('click'))
@@ -71,20 +63,49 @@
     @endif)">
 
         {{--  verificação do email  --}}
-        @auth
-            @if($user->email_verificado == null)
+
+            @if(isset($user) && $user->email_verificado == null)
                 <style>
                     html, body {
                         overflow: hidden;
                     }
-                    #main-header{
-                        margin-top: -190px;
-                    }
-                    #conteudo{
-                        margin-top: -190px;
+                    #imgfundoinit{
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        position: fixed;
+                        object-fit: cover;
                     }
 
+                    #imgVerificaEmail{
+                        margin:0;
+                        padding:0;
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        position: fixed;
+                        opacity : 0.9;
+                        z-index: 2;
+                    }
+                    #formVerificaEmail{
+                        width: 300px;
+                        top:50%;
+                        left:50%;
+                        margin-left: -140px;
+                        margin-top: -140px;
+                        display: flex;
+                        z-index: 3;
+                        text-align: center;
+                        padding: 5px;
+                    }
+                    #time{
+                        color: red;
+                    }
+        
+
                 </style>
+                <img id="imgfundoinit" src="/img/fundo.png" alt="">
+
                 <img id="imgVerificaEmail" src="/img/fundopreto.png" alt="">
                 <div id="formVerificaEmail" class="card col-md-5">
                     <p>Enviamos um código em seu email. <br> Digite-o abaixo para continuar seu cadastro.</p>
@@ -184,8 +205,7 @@
                     setInterval(function(){ajax();}, 1000);
 
                 </script>
-            @endif
-        @endauth
+            @else
         {{--  verificação do email  --}}
 
         <header id="main-header">
@@ -226,25 +246,47 @@
                 <nav id="menu">
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="#">Sobre</a></li>
+                        {{--  <li><a href="#">Sobre</a></li>  --}}
                         <li><a href="#">Quem Somos</a></li>
                         <li><a href="#">Contato</a></li>
-                        
+                        <li><a data-toggle="modal" data-target="#flipFlop" href="">Chat<i id="notificacao" class="fa fa-circle" aria-hidden="true"><span id="numeroNotify">1</span></i></a></li>
                     </ul>
                 </nav>
 
             </nav>
 
-
         </header>
 
         <main id="conteudo">
             @yield('content')
+
+            {{--  <!-- The modal -->  --}}
+            <div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modalLabel">VICTOR HUGO</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Modal content...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
 
         <footer id="footer">
 
         </footer>
+
+        @endif
 
 
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

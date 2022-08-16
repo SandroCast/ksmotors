@@ -81,10 +81,9 @@
 
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
-                            @for($i = 0; $i < count($fotos); $i++)
+                            {{--  @for($i = 0; $i < count($fotos); $i++)
                                 <li data-target="#my-pics{{$product->id}}" data-slide-to="{{$i}}" class="indicadores @if($i == 0) {{'active'}} @endif"></li>
-                            @endfor
-
+                            @endfor  --}}
                         </ol>
                         
                         <!-- Content -->
