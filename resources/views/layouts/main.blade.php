@@ -31,7 +31,9 @@
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
                 
 
-        <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
+        {{--  <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">  --}}
+
+        //extends o form de mensagens para outra view
 
         <!-- CSS da aplicação -->
         <link rel="stylesheet" href="/css/style_layouts.css">
@@ -286,7 +288,7 @@
                                     <!----- list users ----->
                                     <div class="w-4/12 bg-gray-200 bg-opacity-25 border-r border-gray-200 overflow-y-scroll">
                                         <ul id="resultadoJson">
-                                            //resultado json lista conversas
+                                            {{--  //resultado json lista conversas  --}}
                                             {{--  <span class="ml-2 w-2 h-2 bg-blue-500 rounded-full"></span>  --}}
                                         </ul>
 
