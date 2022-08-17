@@ -55,8 +55,6 @@ Route::get('/produto/{id}', [ProductController::class, 'show'])->middleware('aut
 
 
 
-
-
 Route::get('/chat/home', [MessageController::class, 'home']);
 
 Route::get('/chat', [MessageController::class, 'index']);
@@ -66,3 +64,6 @@ Route::get('/load', [MessageController::class, 'load']);
 Route::get('/conversa/{id}', [MessageController::class, 'load_conversas']);
 Route::post('/enviar/{id}', [MessageController::class, 'update']);
 
+
+
+Route::get('/api/mensagens/{id}', [MessageController::class, 'apiMensagens']);

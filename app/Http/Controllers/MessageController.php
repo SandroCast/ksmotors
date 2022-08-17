@@ -11,6 +11,17 @@ class MessageController extends Controller
 {
 
 
+	public function apiMensagens($id, Request $request)
+    {
+
+		$usuarios = User::all();
+
+		return response()->json($usuarios);
+
+	}
+
+
+
     public function home()
     {
 
