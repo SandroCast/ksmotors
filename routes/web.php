@@ -66,4 +66,9 @@ Route::post('/enviar/{id}', [MessageController::class, 'update']);
 
 
 
-Route::get('/api/mensagens/{id}', [MessageController::class, 'apiMensagens']);
+Route::get('/api/mensagens', [MessageController::class, 'apiMensagens']);
+Route::get('/api/carrega/mensagem/{id}', [MessageController::class, 'apiCarregaMensagens']);
+
+
+
+Route::get('/teste/api', [MessageController::class, 'apiMensagens']);

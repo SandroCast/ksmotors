@@ -10,15 +10,66 @@ use Illuminate\Support\Facades\Auth;
 class MessageController extends Controller
 {
 
-
-	public function apiMensagens($id, Request $request)
+	public function apiMensagens(Request $request)
     {
+        $array = array();
 
-		$usuarios = User::all();
+        $user = Auth::user();
 
-		return response()->json($usuarios);
+        $mensagens = Message::where([
+            ['from', $user->id]
+
+        ])->orwhere([
+            ['to', $user->id]
+
+        ])->orderBy('created_at', 'DESC')->get()->unique('duo');
+
+        if($mensagens && count($mensagens) > 0){
+
+            foreach ($mensagens as $mensagem){
+
+                if($mensagem->userfrom->name == $user->name){
+                    $array['conversas'] = $mensagem->userto->id.' '.$mensagem->userto->name;
+                }else{
+                    $array['conversas'] = $mensagem->userfrom->id.' '.$mensagem->userfrom->name;
+                }
+
+            }
+
+        }
+
+		return response()->json($array);
 
 	}
+
+
+    public function apiCarregaMensagens($id)
+    {
+
+        
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -116,7 +167,7 @@ class MessageController extends Controller
 
     }
 
-    public function load_conversas(Request $request, $id)
+    public function load_conversas(Request $request, $id) //-=======================================
     {
         $user = Auth::user();
         $amigo = Message::findOrFail($id);

@@ -8,6 +8,8 @@
 
         <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon" />
 
+        <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
+
         <!-- Fa fa-tachometer -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -31,9 +33,6 @@
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
                 
 
-        {{--  <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">  --}}
-
-        //extends o form de mensagens para outra view
 
         <!-- CSS da aplicação -->
         <link rel="stylesheet" href="/css/style_layouts.css">
@@ -287,7 +286,7 @@
 
                                     <!----- list users ----->
                                     <div class="w-4/12 bg-gray-200 bg-opacity-25 border-r border-gray-200 overflow-y-scroll">
-                                        <ul id="resultadoJson">
+                                        <ul id="resultadoJson" class="px-0">
                                             {{--  //resultado json lista conversas  --}}
                                             {{--  <span class="ml-2 w-2 h-2 bg-blue-500 rounded-full"></span>  --}}
                                         </ul>
@@ -301,7 +300,7 @@
                                         <div class="w-full p-6 flex flex-col overflow-y-scroll">
                                             <div class="w-full mb-3 message">
                                                 <p class="inline-block p-2 rounded-md" style="max-width: 75%;">
-                                                    {{--  {{ message.content }}  --}}
+                                                    {{--  {{ message.content }}  --}}fsfsdfsfdsfdasssssss
                                                 </p>
                                                 {{--  <span class="block mt-1 text-xs text-gray-500">{{ message.created_at }}</span>  --}}
                                             </div>
@@ -329,18 +328,16 @@
                 </div>
             </div>
 
-
-            <input id="usuarioLogado" type="hidden" value="{{$user->id}}">
             <script>
 
                 document.addEventListener('DOMContentLoaded', () => {
 
                     function ajaxon(){
 
-                        var id_user = $("#usuarioLogado").val();
+                       // var id_user = $("#usuarioLogado").val();
                     
                         $.ajax({
-                            url: '/api/mensagens/'+id_user,
+                            url: '/api/mensagens',
                             //data: {
                             //    id_user: id_user
                             //},
@@ -349,16 +346,18 @@
                     
                                 var linha = '';
                     
-                                if (result && result.length > 0) {
+                                if (result.conversas && result.conversas.length > 0) {
                     
                                     $.each(result, function(index, val) {
 
+                                        linha += '<a style="text-decoration: none;" href="" onclick="event.preventDefault(); carregaConversa('+val.split(" ")[0]+')">';
                                         linha += '<li class="p-6 text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-gray-200 hover:bg-opacity-50 hover:cursor-pointer">';
-                                        linha += '<p style="font-size: 15px" class="flex items-center">'+val.name.split(" ")[0]+'</p>';
+                                        linha += '<p style="font-size: 15px" class="flex items-center my-0">'+val.split(" ")[1]+'</p>';
                                         linha += '</li>';
+                                        linha += '</a>';
 
                                     });
-                                    //console.log(result[0].name);
+                                //    console.log(result.conversas);   .split(" ")[0]
 
                                 }
 
@@ -373,9 +372,33 @@
 
                     }
             
-                    setInterval(function(){ajaxon();}, 5000);
+                    setInterval(function(){ajaxon();}, 1000);
 
                 })
+
+
+                function carregaConversa($id){
+                    $.ajax({
+                        url: '/api/carrega/mensagem/'+$id,
+                        //data: {
+                        //    id_user: id_user
+                        //},
+                        dataType: 'json',
+
+                    });
+
+                }
+
+
+
+                $(".clickCon").click(function(event) {
+                    event.preventDefault();
+
+                    alert('ola');
+
+                });
+
+
                     
             </script>
 
