@@ -60,10 +60,12 @@
             .me {
                 opacity: 25;
                 background-color:#EBF0FF;
+                margin-left: 5px;
             }
             .to {
                 opacity: 25;
                 background-color:#F4F4F8;
+                margin-right: 5px;
             }
     
         </style>
@@ -299,8 +301,8 @@
                                         <!----- message ----->
                                         <div class="w-full p-6 flex flex-col overflow-y-scroll">
                                             <div class="w-full mb-3 message">
-                                                <p class="inline-block p-2 rounded-md" style="max-width: 75%;">
-                                                    {{--  {{ message.content }}  --}}fsfsdfsfdsfdasssssss
+                                                <p id="resultadoJsonMensagens" class="inline-block p-2 rounded-md" style="max-width: 75%;">
+                                                    {{--  {{ message.content }}  --}}
                                                 </p>
                                                 {{--  <span class="block mt-1 text-xs text-gray-500">{{ message.created_at }}</span>  --}}
                                             </div>
@@ -328,14 +330,16 @@
                 </div>
             </div>
 
+            <input type="hidden" name="" id="usuarioLogado" value="{{$user->id}}">
+
             <script>
 
                 document.addEventListener('DOMContentLoaded', () => {
 
                     function ajaxon(){
 
-                       // var id_user = $("#usuarioLogado").val();
-                    
+                        var user_logado = $("#usuarioLogado").val();
+
                         $.ajax({
                             url: '/api/mensagens',
                             //data: {
@@ -348,7 +352,7 @@
                     
                                 if (result.conversas && result.conversas.length > 0) {
                     
-                                    $.each(result, function(index, val) {
+                                    $.each(result.conversas, function(index, val) {
 
                                         linha += '<a style="text-decoration: none;" href="" onclick="event.preventDefault(); carregaConversa('+val.split(" ")[0]+')">';
                                         linha += '<li class="p-6 text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-gray-200 hover:bg-opacity-50 hover:cursor-pointer">';
@@ -365,7 +369,71 @@
                                 //$("#modalItemRecebido #item").css('display', 'none');
                                 $("#resultadoJson").html(linha);
                     
-                                //console.log(result[0].name);
+                                var linha2 = '';
+
+                                if(result.conversaAberta && result.conversaAberta.length > 0){
+
+
+                                    $.each(result.conversaAberta, function(index, vall) {
+
+                                        if(vall.from == user_logado){
+                                            var t_right = 'text-right';
+                                            var me_to = 'me';
+                                            var mx = 'mx-5';
+                                        }else{
+                                            var t_right = '';
+                                            var me_to = 'to';
+                                            var mx = '';
+                                        }
+
+                                        linha2 += '<div class="w-full mb-3 message '+t_right+'">';
+
+                                        linha2 += '<p class="inline-block p-2 rounded-md '+me_to+'" style="max-width: 90%;">';
+                                        linha2 += vall.content;
+
+                                        linha2 += '</p>';
+
+                                        if(vall.from == user_logado && vall.visa == 2){
+                                        linha2 += '<img class="inline-block" style="max-width: 75%;" src="/ico/visualizado.ico" alt="profile Pic" height="15" width="15">';
+                                        }
+                                        if(vall.from == user_logado && vall.visa == 1){
+                                        linha2 += '<img class="inline-block" style="max-width: 75%;" src="/ico/entregue.ico" alt="profile Pic" height="15" width="15">';
+                                        }
+                                        if(vall.from == user_logado && vall.visa == 0){
+                                        linha2 += '<img class="inline-block" style="max-width: 75%;" src="/ico/enviado.ico" alt="profile Pic" height="15" width="15">';
+                                        }
+
+                                        linha2 += '<span class="block mt-1 '+mx+' text-xs text-gray-500" style="font-size: 11px">'+vall.created_at+'</span>';
+
+                                        linha2 += '</div>';
+                                
+                                    
+
+                                        //console.log(vall.content);
+
+                                    });
+
+
+                                }
+
+
+
+
+
+
+                                $("#resultadoJsonMensagens").html(linha2);
+                        
+                                //    if(document.querySelectorAll('.message').length != num){
+                                //        document.querySelectorAll('.message:last-child')[0].scrollIntoView();
+                                //    }
+                                //    if(cont < 1){
+                                //        document.querySelectorAll('.message:last-child')[0].scrollIntoView();
+                                //        cont ++;
+
+                                //    var num = document.querySelectorAll('.message').length;
+
+
+
                             }
                         });
                         
@@ -380,11 +448,7 @@
                 function carregaConversa($id){
                     $.ajax({
                         url: '/api/carrega/mensagem/'+$id,
-                        //data: {
-                        //    id_user: id_user
-                        //},
-                        dataType: 'json',
-
+                
                     });
 
                 }

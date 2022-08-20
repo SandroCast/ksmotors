@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -29,11 +30,27 @@ class MessageController extends Controller
             foreach ($mensagens as $mensagem){
 
                 if($mensagem->userfrom->name == $user->name){
-                    $array['conversas'] = $mensagem->userto->id.' '.$mensagem->userto->name;
+                    $array['conversas'][] = $mensagem->id.' '.$mensagem->userto->name;
                 }else{
-                    $array['conversas'] = $mensagem->userfrom->id.' '.$mensagem->userfrom->name;
+                    $array['conversas'][] = $mensagem->id.' '.$mensagem->userfrom->name;
                 }
 
+            }
+
+        }
+
+
+        if(Session::has('conversaAberta')){
+
+            $amigo = Message::findOrFail(Session::get('conversaAberta'));
+    
+            $mensagensAbertas = Message::where([
+                 ['duo', $amigo->duo]
+
+            ])->get();
+
+            foreach ($mensagensAbertas as $mensagensAberta){
+                $array['conversaAberta'][] = $mensagensAberta;
             }
 
         }
@@ -46,10 +63,11 @@ class MessageController extends Controller
     public function apiCarregaMensagens($id)
     {
 
-        $teste = '';
-
-    
-
+        // if(Session::has('conversaAberta')){
+        //     Session::forget('conversaAberta');
+        // }
+        Session::put('conversaAberta', $id);
+        //Session::get('conversaAberta');
 
     }
 
