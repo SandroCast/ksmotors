@@ -31,9 +31,9 @@ Route::put('/product/update/{id}', [ProductController::class, 'update'])->middle
 Route::get('/produtos', [ProductController::class, 'dashboard'])->middleware('auth');
 
 
-Route::post('/product/join/{id}', [ProductController::class, 'joinProduct'])->middleware('auth');
+Route::get('/product/join/{id}', [ProductController::class, 'joinProduct'])->middleware('auth');
 
-Route::post('/product/favorite/{id}', [ProductController::class, 'favorito_novo'])->middleware('auth');
+Route::get('/product/favorite/{id}', [ProductController::class, 'favorito_novo'])->middleware('auth');
 
 Route::delete('/product/favorite/remove/{id}', [ProductController::class, 'favorito_remover'])->middleware('auth');
 

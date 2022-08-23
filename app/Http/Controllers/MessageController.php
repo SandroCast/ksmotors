@@ -49,6 +49,12 @@ class MessageController extends Controller
 
             ])->get();
 
+            if($mensagensAbertas->first()->from == $user->id){
+                $array['conversaAbertaNome'] = $mensagensAbertas->first()->userto->name;
+            }else{
+                $array['conversaAbertaNome'] = $mensagensAbertas->first()->userfrom->name;
+            }
+
             foreach ($mensagensAbertas as $mensagensAberta){
                 $array['conversaAberta'][] = $mensagensAberta;
             }

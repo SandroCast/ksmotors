@@ -60,12 +60,11 @@
             .me {
                 opacity: 25;
                 background-color:#EBF0FF;
-                margin-left: 5px;
+                margin-right: 5px;
             }
             .to {
                 opacity: 25;
                 background-color:#F4F4F8;
-                margin-right: 5px;
             }
     
         </style>
@@ -298,16 +297,17 @@
                                     <!----- box message ----->
                                     <div class="w-8/12 flex flex-col justify-between">
 
-                                        <!----- message ----->
-                                        <div class="w-full p-6 flex flex-col overflow-y-scroll">
-                                            <div class="w-full mb-3 message">
-                                                <p id="resultadoJsonMensagens" class="inline-block p-2 rounded-md" style="max-width: 75%;">
-                                                    {{--  {{ message.content }}  --}}
-                                                </p>
-                                                {{--  <span class="block mt-1 text-xs text-gray-500">{{ message.created_at }}</span>  --}}
-                                            </div>
+                                        <!----- nome ----->
+                                        <div class="w-full bg-gray-500 border border-gray-300 bg-opacity-25 p-3 pl-5 text-xl text-gray-600 leading-7 font-semibold flex">
+                                            <label class="m-0" for="" id="msgAbertaNome">
+                                                {{--  resultado Nome --}}
+                                            </label>
+                    
+                                        </div>
 
-                                            
+                                        <!----- message ----->
+                                        <div class="w-full p-6 flex flex-col overflow-y-scroll" id="resultadoJsonMensagens">
+                                            {{--  resultado  --}}
                                         </div>
 
                                         <!--- form --->
@@ -336,6 +336,7 @@
 
                 document.addEventListener('DOMContentLoaded', () => {
 
+                    var cont = 0;
                     function ajaxon(){
 
                         var user_logado = $("#usuarioLogado").val();
@@ -386,6 +387,7 @@
                                             var mx = '';
                                         }
 
+                                        
                                         linha2 += '<div class="w-full mb-3 message '+t_right+'">';
 
                                         linha2 += '<p class="inline-block p-2 rounded-md '+me_to+'" style="max-width: 90%;">';
@@ -406,38 +408,32 @@
                                         linha2 += '<span class="block mt-1 '+mx+' text-xs text-gray-500" style="font-size: 11px">'+vall.created_at+'</span>';
 
                                         linha2 += '</div>';
-                                
-                                    
+                                        
 
-                                        //console.log(vall.content);
+                                        //console.log(result.conversaAbertaNome);
 
                                     });
 
 
                                 }
 
-
-
-
-
-
+                                $("#msgAbertaNome").html(result.conversaAbertaNome);
                                 $("#resultadoJsonMensagens").html(linha2);
                         
-                                //    if(document.querySelectorAll('.message').length != num){
-                                //        document.querySelectorAll('.message:last-child')[0].scrollIntoView();
-                                //    }
-                                //    if(cont < 1){
-                                //        document.querySelectorAll('.message:last-child')[0].scrollIntoView();
-                                //        cont ++;
-
-                                //    var num = document.querySelectorAll('.message').length;
-
-
+                                if(document.querySelectorAll('.message').length != num){
+                                    document.querySelectorAll('.message:last-child')[0].scrollIntoView();
+                                }
+                                if(cont < 1){
+                                    document.querySelectorAll('.message:last-child')[0].scrollIntoView();
+                                    cont ++;
+                                }
 
                             }
                         });
                         
+                        var num = document.querySelectorAll('.message').length;
 
+                        console.log(num);
                     }
             
                     setInterval(function(){ajaxon();}, 1000);

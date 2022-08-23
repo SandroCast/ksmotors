@@ -117,7 +117,7 @@
        
                     <h5 class="card-title">{{ $product->title }}</h5>
                     <h5 style="color: rgb(0, 126, 84);" class="card-title">{{'R$'.number_format($product->preco, 2, ',', '.')}}</h5>
-                    <p><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ count($product->users) }}</p>
+                    <p><i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="qtdeCur{{$product->id}}tidas"> {{ count($product->users) }}</span></p>
                     <div>
 
                         <a id="id" class="btn btn-primary" href="/produto/{{$product->id}}">Mais</a>
@@ -129,12 +129,10 @@
                         <a href="" onclick="event.preventDefault();"><i style="color: #0d6efd;" class="fa fa-heart opc" aria-hidden="true"></i></a>
                         <h3 class="opc" style="display: inline">|</h3>
                         @else
-                        <form class="opc" action="/product/favorite/{{ $product->id }}" method="post">
-                        @csrf
-                        <a href="/product/favorite/{{ $product->id }}" onclick="event.preventDefault(); this.closest('form').submit();"><i class="fa fa-heart-o opc" aria-hidden="true"></i></a>
+                        <span class="favoritada{{$product->id}}click">
+                            <a href="" onclick="event.preventDefault(); addFavorito({{$product->id}});"><i class="fa fa-heart-o opc" aria-hidden="true"></i></a>
+                        </span>
                         <h3 class="opc" style="display: inline">|</h3>
-                        </form>
-
                         @endif
 
                         
@@ -142,13 +140,11 @@
                         @php $usu = $product->users->where('id', $user->id)->first(); @endphp
                         @endauth
                         @if($user && $usu)
-
                             <a href="" onclick="event.preventDefault();"><i class="fa fa-thumbs-up opc" aria-hidden="true"></i></a>
                         @else
-                            <form class="opc" action="/product/join/{{ $product->id }}" method="post">
-                                @csrf
-                                <a href="/product/join/{{ $product->id }}" onclick="event.preventDefault(); this.closest('form').submit();"><i class="fa fa-thumbs-o-up opc" aria-hidden="true"></i></a>
-                            </form>
+                        <span class="curtida{{$product->id}}click">
+                            <a href="" onclick="event.preventDefault(); addCurtida({{$product->id}});"><i class="fa fa-thumbs-o-up opc" aria-hidden="true"></i></a>
+                        </span>
                         @endif
 
                     </div>
@@ -156,5 +152,40 @@
             </div>
         @endforeach
     </div>
+
+    <script>
+        function addFavorito($id){
+            $.ajax({
+                url: '/product/favorite/'+$id,
+            });
+            var linhafavorito = '';
+            linhafavorito += '<a href="" onclick="event.preventDefault();"><i style="color: #0d6efd;" class="fa fa-heart opc" aria-hidden="true"></i></a>';
+            //$(".favoritada"+$id).css('background-color', '#0d6efd');
+            $(".favoritada"+$id+"click").html(linhafavorito);
+        }
+
+        function addCurtida($id){
+            $.ajax({
+                url: '/product/join/'+$id,
+
+                dataType: 'json',
+                success: function(result) {
+                    
+                    //console.log(result.qtdeCurtidas);
+                    $(".qtdeCur"+$id+"tidas").html(result.qtdeCurtidas);
+                }
+
+            });
+
+            var linhacurtida = '';
+            linhacurtida += '<a href="" onclick="event.preventDefault();"><i class="fa fa-thumbs-up opc" aria-hidden="true"></i></a>';
+            //$(".favoritada"+$id).css('background-color', '#0d6efd');
+            $(".curtida"+$id+"click").html(linhacurtida);
+
+        }
+
+
+
+    </script>
 
 @endsection

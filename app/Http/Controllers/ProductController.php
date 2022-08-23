@@ -205,11 +205,17 @@ class ProductController extends Controller
 
     public function joinProduct($id)
     {
+        $array = array();
+
         $user = auth()->user();
 
         $user->productsAsParticipant()->attach($id);
 
-        return redirect('/')->with('click', $id);
+        $curtidas = Like::where('product_id', $id)->get();
+
+        $array['qtdeCurtidas'] = count($curtidas);
+
+        return response()->json($array);
 
     }
 
@@ -222,8 +228,6 @@ class ProductController extends Controller
         $novo->user_id = $user->id;
 
         $novo->save();
-
-        return redirect('/')->with('click', $id);
 
     }
 
