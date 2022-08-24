@@ -152,35 +152,58 @@
             </div>
         @endforeach
     </div>
-
+    @php
+        if($user){
+            $log = 'logado';
+        }else{
+            $log = null;
+        }
+    @endphp
     <script>
+
         function addFavorito($id){
-            $.ajax({
-                url: '/product/favorite/'+$id,
-            });
-            var linhafavorito = '';
-            linhafavorito += '<a href="" onclick="event.preventDefault();"><i style="color: #0d6efd;" class="fa fa-heart opc" aria-hidden="true"></i></a>';
-            //$(".favoritada"+$id).css('background-color', '#0d6efd');
-            $(".favoritada"+$id+"click").html(linhafavorito);
+            let log;
+            log = @json($log);
+
+            if(log != null){
+                $.ajax({
+                    url: '/product/favorite/'+$id,
+                });
+                var linhafavorito = '';
+                linhafavorito += '<a href="" onclick="event.preventDefault();"><i style="color: #0d6efd;" class="fa fa-heart opc" aria-hidden="true"></i></a>';
+                //$(".favoritada"+$id).css('background-color', '#0d6efd');
+                $(".favoritada"+$id+"click").html(linhafavorito);
+
+            }else{
+                location.href = '/login';
+            }
+
         }
 
         function addCurtida($id){
-            $.ajax({
-                url: '/product/join/'+$id,
+            let log;
+            log = @json($log);
 
-                dataType: 'json',
-                success: function(result) {
-                    
-                    //console.log(result.qtdeCurtidas);
-                    $(".qtdeCur"+$id+"tidas").html(result.qtdeCurtidas);
-                }
+            if(log != null){
+                $.ajax({
+                    url: '/product/join/'+$id,
 
-            });
+                    dataType: 'json',
+                    success: function(result) {
+                        
+                        //console.log(result.qtdeCurtidas);
+                        $(".qtdeCur"+$id+"tidas").html(result.qtdeCurtidas);
+                    }
 
-            var linhacurtida = '';
-            linhacurtida += '<a href="" onclick="event.preventDefault();"><i class="fa fa-thumbs-up opc" aria-hidden="true"></i></a>';
-            //$(".favoritada"+$id).css('background-color', '#0d6efd');
-            $(".curtida"+$id+"click").html(linhacurtida);
+                });
+
+                var linhacurtida = '';
+                linhacurtida += '<a href="" onclick="event.preventDefault();"><i class="fa fa-thumbs-up opc" aria-hidden="true"></i></a>';
+                //$(".favoritada"+$id).css('background-color', '#0d6efd');
+                $(".curtida"+$id+"click").html(linhacurtida);
+            }else{
+                location.href = '/login';
+            }
 
         }
 

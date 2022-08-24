@@ -259,11 +259,13 @@
                 </nav>
                 <nav id="menu">
                     <ul>
-                        <li><a href="/">Home</a></li>
+                        <li><a style="margin-left: 50px;" href="/">Home</a></li>
                         {{--  <li><a href="#">Sobre</a></li>  --}}
-                        <li><a href="#">Quem Somos</a></li>
+                        {{--  <li><a href="#">Quem Somos</a></li>  --}}
                         <li><a href="#">Contato</a></li>
+                        @auth
                         <li><a data-toggle="modal" data-target="#flipFlop" href="">Chat<i id="notificacao" class="fa fa-circle" aria-hidden="true"><span id="numeroNotify">1</span></i></a></li>
+                        @endauth
                     </ul>
                 </nav>
 
@@ -312,12 +314,10 @@
 
                                         <!--- form --->
                                         <div class="w-full bg-gray-200 bg-opacity-25 p-6 border-t border-gray-200">
-                                            <form >
-                                                <div class="flex rounded-md overflow-hidden border border-gray-300">
-                                                    <input type="text" class="flex-1 px-4 py-2 text-lx focus:outline-none border-none">
-                                                    <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2">Enviar</button>
-                                                </div>
-                                            </form>
+                                            <div class="flex rounded-md overflow-hidden border border-gray-300">
+                                                <input id="conteudoEnviarMensagem" type="text" class="w-5 flex-1 px-4 py-2 text-lx focus:outline-none border-none">
+                                                <button id="btnEnviarMensagem" type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2">Enviar</button>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -350,6 +350,7 @@
                             success: function(result) {
                     
                                 var linha = '';
+
                     
                                 if (result.conversas && result.conversas.length > 0) {
                     
@@ -427,13 +428,14 @@
                                     document.querySelectorAll('.message:last-child')[0].scrollIntoView();
                                     cont ++;
                                 }
+                                $("#conteudoEnviarMensagem").focus();
 
                             }
                         });
                         
                         var num = document.querySelectorAll('.message').length;
 
-                        console.log(num);
+                        //console.log(num);
                     }
             
                     setInterval(function(){ajaxon();}, 1000);
@@ -451,13 +453,44 @@
 
 
 
-                $(".clickCon").click(function(event) {
+                $("#btnEnviarMensagem").click(function(event) {
                     event.preventDefault();
 
-                    alert('ola');
+                    var conteudoMensagem = $("#conteudoEnviarMensagem").val();
+
+                    $.ajax({
+                        url: '/api/envia/mensagem',
+                        data: {
+                            conteudoMensagem: conteudoMensagem
+                        },
+                
+                    });
+
+                    $("#conteudoEnviarMensagem").val("");
+                    $("#conteudoEnviarMensagem").focus();
 
                 });
 
+                var inputEle = document.getElementById('conteudoEnviarMensagem');
+                inputEle.addEventListener('keyup', function(e){
+
+                    var key = e.which || e.keyCode;
+                    if (key == 13) { // codigo da tecla enter
+                        
+                        var conteudoMensagem = $("#conteudoEnviarMensagem").val();
+                        $.ajax({
+                            url: '/api/envia/mensagem',
+                            data: {
+                                conteudoMensagem: conteudoMensagem
+                            },
+                    
+                        });
+
+                        $("#conteudoEnviarMensagem").val("");
+                        $("#conteudoEnviarMensagem").focus();
+
+                    }
+                });
 
                     
             </script>

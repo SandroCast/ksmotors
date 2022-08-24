@@ -77,6 +77,37 @@ class MessageController extends Controller
 
     }
 
+    public function apiEnviaMensagens(Request $request)
+    {
+
+        $userlogado = Auth::user();
+
+        if(Message::findOrFail(Session::get('conversaAberta'))->from == $userlogado->id){
+            $parceiro = Message::findOrFail(Session::get('conversaAberta'))->userto->id;
+        }else{
+            $parceiro = Message::findOrFail(Session::get('conversaAberta'))->userfrom->id;
+        }
+
+        if($parceiro < $userlogado->id){
+            $duo = $parceiro . '-' . $userlogado->id;
+        }else{
+            $duo = $userlogado->id . '-' . $parceiro;
+        }
+
+        $novo = new Message;
+        $novo->from = $userlogado->id;
+        $novo->to = $parceiro;
+        $novo->duo = $duo;
+        $novo->content = $request->conteudoMensagem;
+        $novo->visa = 0;
+        $novo->save();
+
+
+    }
+
+
+    
+
 
 
 
