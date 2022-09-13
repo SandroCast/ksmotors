@@ -133,14 +133,9 @@
             <h3>{{$produto->title}}</h3>
             <h5>{{$produto->description}}</h5>
             <h1>{{'R$'.number_format($produto->preco, 2, ',', '.')}}</h1>
-
             <br>
-
-            <form action="" method="POST">
-                @csrf
-                <button class="btn-manual-center-success">Combinar entrega</button>
-            </form>
-            
+            <button data-toggle="modal" data-target="#flipFlop" onclick="iniciaConversa({{$produto->id}})" class="btn-manual-center-success">Combinar entrega</button>
+        
             {{--  <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js"
                 data-preference-id="{{$produto->token_pagamento}}" data-source="button">
             </script>  --}}
@@ -149,6 +144,15 @@
                 document.addEventListener('DOMContentLoaded', () => {
                     $(".mercadopago-button").html('Comprar');
                 })
+
+                function iniciaConversa($id){
+                    $.ajax({
+                        url: '/api/inicia/conversa/'+$id,
+                    });
+    
+                }
+
+
             </script>
 
 

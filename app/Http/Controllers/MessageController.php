@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Session;
 use App\Models\Message;
 use App\Models\User;
+use App\Models\VendaProduto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\Foreach_;
 
 class MessageController extends Controller
 {
@@ -39,6 +41,7 @@ class MessageController extends Controller
 
         }
 
+        $array['naoVisualizada'] = $mensagens = Message::where('to', $user->id)->where('visa', 0)->count();
 
         if(Session::has('conversaAberta')){
 
@@ -106,6 +109,67 @@ class MessageController extends Controller
     }
 
 
+    public function apiVisualizaMensagens()
+    {
+        $userlogado = Auth::user();
+
+        $mensagens = Message::where('to', $userlogado->id)->where('visa', 0)->get();
+
+        foreach ($mensagens as $mensagem) {
+            $mensagem->visa = 1;
+            $mensagem->save();
+        }
+
+    }
+
+
+    
+    public function apiIniciaConversa($id)
+    {
+        $userlogado = Auth::user();
+
+        $verificaDuplicatas = VendaProduto::where('id_produto', $id)->where('id_user', $userlogado->id)->where('status', 'Em análise')->first();
+
+        if(!$verificaDuplicatas){
+
+            $parceiro = 1;
+
+            if($parceiro < $userlogado->id){
+                $duo = $parceiro . '-' . $userlogado->id;
+            }else{
+                $duo = $userlogado->id . '-' . $parceiro;
+            }
+
+            $pedido = new VendaProduto;
+            $pedido->id_produto = $id;
+            $pedido->id_user = $userlogado->id;
+            $pedido->status = 'Em análise';
+            $pedido->save();
+
+            if($pedido->id < 10){
+                $n = '0000'.$pedido->id;
+            }elseif($pedido->id < 100){
+                $n = '000'.$pedido->id;
+            }elseif($pedido->id < 1000){
+                $n = '00'.$pedido->id;
+            }elseif($pedido->id < 10000){
+                $n = '0'.$pedido->id;
+            }else{
+                $n = $pedido->id;
+            }
+
+            $novo = new Message;
+            $novo->from = $userlogado->id;
+            $novo->to = $parceiro;
+            $novo->duo = $duo;
+            $novo->content = 'PEDIDO: '.$n;
+            $novo->visa = 0;
+            $novo->save();
+
+        }
+
+
+    }
     
 
 

@@ -264,7 +264,7 @@
                         {{--  <li><a href="#">Quem Somos</a></li>  --}}
                         <li><a href="#">Contato</a></li>
                         @auth
-                        <li><a data-toggle="modal" data-target="#flipFlop" href="">Chat<i id="notificacao" class="fa fa-circle" aria-hidden="true"><span id="numeroNotify">1</span></i></a></li>
+                        <li><a data-toggle="modal" data-target="#flipFlop" href="" onclick="visualizaMensagem()">Chat<i id="notificacao" style="display: none" class="fa fa-circle" aria-hidden="true"><span id="numeroNotify">1</span></i></a></li>
                         @endauth
                     </ul>
                 </nav>
@@ -425,6 +425,16 @@
 
                                 }
 
+                                if(result.naoVisualizada > 0){
+                                    if($("#notificacao").css('display') == 'none'){
+                                        $("#notificacao").css('display', 'inline');
+                                    }
+                                }else{
+                                    if($("#notificacao").css('display') == 'inline'){
+                                    $("#notificacao").css('display', 'none');
+                                    }
+                                }
+
                                 if(result.conversaAberta.length != qtdeMensagem){
                                     $("#msgAbertaNome").html(result.conversaAbertaNome);
                                     $("#resultadoJsonMensagens").html(linha2);
@@ -463,7 +473,13 @@
 
                 }
 
+                function visualizaMensagem(){
+                    $.ajax({
+                        url: '/api/visualiza/mensagem',
+                
+                    });
 
+                }
 
                 $("#btnEnviarMensagem").click(function(event) {
                     event.preventDefault();
@@ -503,6 +519,11 @@
 
                     }
                 });
+
+
+
+
+
 
                     
             </script>
