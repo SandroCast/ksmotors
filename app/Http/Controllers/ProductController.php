@@ -179,7 +179,7 @@ class ProductController extends Controller
             $favorite->delete();
         }
 
-        $fotos = FotosProdutos::where('id_produto', $id)->get();
+        $fotos = FotoProduto::where('id_produto', $id)->get();
         foreach($fotos as $foto){
             $foto->delete();
         }
