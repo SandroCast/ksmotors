@@ -9,6 +9,7 @@ use App\Models\Favorite;
 use App\Models\Like;
 use App\Models\User;
 use App\Models\FotoProduto;
+use App\Models\VendaProduto;
 use BaconQrCode\Renderer\Color\Rgb;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -112,10 +113,11 @@ class ProductController extends Controller
     {
         $user = auth()->user();
 
+        $qtdeVenda = VendaProduto::where('id_produto', $id)->where('status', 'Finalizada')->count();
         $fotos = FotoProduto::where('id_produto', $id)->get();
         $produto = Product::findOrFail($id);
         
-        return view('produtos.show', compact('user', 'fotos', 'produto'));
+        return view('produtos.show', compact('user', 'fotos', 'produto', 'qtdeVenda'));
 
     }
 

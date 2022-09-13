@@ -129,7 +129,7 @@
 
         <div id="textDetalhe" class="offset-md-7" style="z-index: 0;">
 
-            <p style="color: #999">503 vendidos</p>
+            <p style="color: #999">{{$qtdeVenda}} vendas</p>
             <h3>{{$produto->title}}</h3>
             <h5>{{$produto->description}}</h5>
             <h1>{{'R$'.number_format($produto->preco, 2, ',', '.')}}</h1>
