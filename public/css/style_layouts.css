@@ -92,3 +92,37 @@ body {
     width: 80px;
     object-fit: cover;
 }
+
+
+.btn-manual-success{
+    background-color: #449D44;
+    padding: 7px 15px;
+    color: white;
+    border-radius: 5px;
+
+}
+.btn-manual-center-success{
+    background-color: #449D44;
+    padding: 7px 15px;
+    color: white;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+
+}
+.btn-manual-primary{
+    background-color: #337AB7;
+    padding: 7px 15px;
+    color: white;
+    border-radius: 5px;
+
+}
+.btn-manual-center-primary{
+    background-color: #337AB7;
+    padding: 7px 15px;
+    color: white;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+
+}

@@ -313,7 +313,7 @@
                                         </div>
 
                                         <!--- form --->
-                                        <div class="w-full bg-gray-200 bg-opacity-25 p-6 border-t border-gray-200">
+                                        <div id="foenme" style="display: none" class="w-full bg-gray-200 bg-opacity-25 p-6 border-t border-gray-200">
                                             <div class="flex rounded-md overflow-hidden border border-gray-300">
                                                 <input id="conteudoEnviarMensagem" type="text" class="w-5 flex-1 px-4 py-2 text-lx focus:outline-none border-none">
                                                 <button id="btnEnviarMensagem" type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2">Enviar</button>
@@ -336,6 +336,9 @@
 
                 document.addEventListener('DOMContentLoaded', () => {
 
+                    var num = 0;
+                    var qtdeContato = 0;
+                    var qtdeMensagem = 0;
                     var cont = 0;
                     function ajaxon(){
 
@@ -351,7 +354,6 @@
                     
                                 var linha = '';
 
-                    
                                 if (result.conversas && result.conversas.length > 0) {
                     
                                     $.each(result.conversas, function(index, val) {
@@ -369,12 +371,17 @@
 
                                 //$("#modalItemRecebido #itens").css('display', 'inline');
                                 //$("#modalItemRecebido #item").css('display', 'none');
-                                $("#resultadoJson").html(linha);
-                    
+                                if(result.conversas.length != qtdeContato){
+                                    $("#resultadoJson").html(linha);
+                                }
+
                                 var linha2 = '';
 
                                 if(result.conversaAberta && result.conversaAberta.length > 0){
 
+                                    if($("#foenme").css('display') == 'none'){
+                                        $("#foenme").css('display', 'block');
+                                    }
 
                                     $.each(result.conversaAberta, function(index, vall) {
 
@@ -418,8 +425,10 @@
 
                                 }
 
-                                $("#msgAbertaNome").html(result.conversaAbertaNome);
-                                $("#resultadoJsonMensagens").html(linha2);
+                                if(result.conversaAberta.length != qtdeMensagem){
+                                    $("#msgAbertaNome").html(result.conversaAbertaNome);
+                                    $("#resultadoJsonMensagens").html(linha2);
+                                }
                         
                                 if(document.querySelectorAll('.message').length != num){
                                     document.querySelectorAll('.message:last-child')[0].scrollIntoView();
@@ -430,10 +439,13 @@
                                 }
                                 $("#conteudoEnviarMensagem").focus();
 
+                                qtdeContato = result.conversas.length;
+                                qtdeMensagem = result.conversaAberta.length;
+
                             }
                         });
                         
-                        var num = document.querySelectorAll('.message').length;
+                        num = document.querySelectorAll('.message').length;
 
                         //console.log(num);
                     }

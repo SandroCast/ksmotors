@@ -76,7 +76,7 @@
     @endif
 
     <div id="product-create-container" class="card col-md-10 offset-md-1 d-block" style="padding-bottom: 10px; display: inline;">
-        
+
 
         <div class="col-md-7" style="z-index: 0; margin-bottom: 100px;">
 
@@ -134,11 +134,16 @@
             <h5>{{$produto->description}}</h5>
             <h1>{{'R$'.number_format($produto->preco, 2, ',', '.')}}</h1>
 
-            
+            <br>
 
-            <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js"
+            <form action="" method="POST">
+                @csrf
+                <button class="btn-manual-center-success">Combinar entrega</button>
+            </form>
+            
+            {{--  <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js"
                 data-preference-id="{{$produto->token_pagamento}}" data-source="button">
-            </script>
+            </script>  --}}
 
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
