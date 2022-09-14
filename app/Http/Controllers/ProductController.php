@@ -394,6 +394,70 @@ class ProductController extends Controller
 
     }
 
+
+
+
+    public function pedidosAbertos(Request $request)
+    {
+        $user = auth()->user();
+
+        if($user->adms > 0){
+
+            $pedidos = VendaProduto::where('id', '>', 0)->orderBy('id', 'desc')->get();
+
+            return view('produtos.pedidos_abertos', compact('user', 'pedidos'));
+        }else{
+            return redirect('/');
+        }
+
+    }
+
+
+
+    public function meusPedidos(Request $request)
+    {
+        $user = auth()->user();
+
+        $pedidos = VendaProduto::where('id_user', $user->id)->orderBy('id', 'desc')->get();
+
+        return view('produtos.meus_pedidos', compact('user', 'pedidos'));
+
+    }
+
+    public function autorizaPedidos($id, Request $request)
+    {
+        $user = auth()->user();
+
+        if($user->adms > 0){
+            $pedido = VendaProduto::findOrFail($id);
+            $pedido->status = 'Aguardando Pagamento';
+            $pedido->save();
+
+            return redirect()->back()->with('msg', 'Compra autorizada com sucesso!');
+        }else{
+            return redirect('/');
+        }
+
+
+    }
+
+    public function cancelaPedidos($id, Request $request)
+    {
+        $user = auth()->user();
+        $pedido = VendaProduto::findOrFail($id);
+
+        if($user->adms > 0 || $pedido->id_user == $user->id){
+            $pedido->status = 'Cancelado';
+            $pedido->save();
+
+            return redirect()->back()->with('msg', 'Pedido cancelado com sucesso!');
+        }else{
+            return redirect('/');
+        }
+
+
+    }
+
     
     
 

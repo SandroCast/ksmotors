@@ -53,6 +53,13 @@ Route::get('/cancela/cadastro', [ProductController::class, 'cancela_cadastro'])-
 Route::get('/produto/{id}', [ProductController::class, 'show'])->middleware('auth');
 
 
+Route::get('/pedidos/abertos', [ProductController::class, 'pedidosAbertos'])->middleware('auth');
+
+Route::get('/meus/pedidos', [ProductController::class, 'meusPedidos'])->middleware('auth');
+
+Route::get('/autoriza/pedido/{id}', [ProductController::class, 'autorizaPedidos'])->middleware('auth');
+Route::get('/cancela/pedido/{id}', [ProductController::class, 'cancelaPedidos'])->middleware('auth');
+
 
 
 Route::get('/chat/home', [MessageController::class, 'home']);
@@ -74,3 +81,5 @@ Route::get('/api/envia/mensagem', [MessageController::class, 'apiEnviaMensagens'
 Route::get('/api/visualiza/mensagem', [MessageController::class, 'apiVisualizaMensagens']);
 
 Route::get('/teste/api', [MessageController::class, 'apiMensagens']);
+
+

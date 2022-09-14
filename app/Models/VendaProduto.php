@@ -11,4 +11,13 @@ class VendaProduto extends Model
 
     protected $table = 'vendas_produtos';
 
+
+    public function user(){
+        return $this->belongsTo('App\Models\User',  'id_user', 'id');
+    }
+
+    public function produto(){
+        return $this->belongsTo('App\Models\Product',  'id_produto', 'id');
+    }
+
 }

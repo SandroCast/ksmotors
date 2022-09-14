@@ -136,14 +136,9 @@
             <br>
             <button data-toggle="modal" data-target="#flipFlop" onclick="iniciaConversa({{$produto->id}})" class="btn-manual-center-success">Combinar entrega</button>
         
-            {{--  <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js"
-                data-preference-id="{{$produto->token_pagamento}}" data-source="button">
-            </script>  --}}
+
 
             <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    $(".mercadopago-button").html('Comprar');
-                })
 
                 function iniciaConversa($id){
                     $.ajax({

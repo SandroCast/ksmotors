@@ -237,9 +237,11 @@
                             <ul>
                                 <li><a href="/user/profile">Meu Perfil</a></li>
                                 <li><a href="/favorito">Favoritos</a></li>
-                                <li><a href="#">Meus Pedidos</a></li>
                                 @if($user->adms > 0)
+                                <li><a href="/pedidos/abertos">Pedidos</a></li>
                                 <li><a href="/produtos">Produtos</a></li>
+                                @else
+                                <li><a href="/meus/pedidos">Meus Pedidos</a></li>
                                 @endif
                                 @if($user->adms > 1)
                                 <li><a href="/usuarios">Usuários</a></li>
