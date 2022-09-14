@@ -65,7 +65,7 @@
                         <td class="align-middle">{{$userr->name}}</td>
                         <td class="align-middle">{{ $userr->email }}</td>
                         <td class="align-middle">{{ $userr->adms }}</td>
-                        <td class="align-middle"><img style="max-height: 50px;" @if($userr->profile_photo_path != null) src="/storage/{{ $userr->profile_photo_path }}" @else src="{{ $userr->profile_photo_url }}" @endif alt=""></td>
+                        <td class="align-middle"><img style="max-height: 50px;" @if($userr->profile_photo_path != null) src="/img/{{ $userr->profile_photo_path }}" @else src="{{ $userr->profile_photo_url }}" @endif alt=""></td>
                         <td class="d-flex align-middle">
                             <form action="/usuarios/promover/{{$userr->id}}" method="POST">
                                 @csrf

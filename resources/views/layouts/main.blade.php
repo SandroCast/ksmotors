@@ -230,10 +230,10 @@
                 <nav id="partesuperior">
                     <a href="/"><strong>3D</strong>PrintEvolution</a>
                     @auth
-                        <a onclick="event.preventDefault(); conf_mini()" href="#" ><img class="imgperfil" style="float: right; font-size: 15px; border-radius: 50%; margin: 5px 10px;" @if(Auth::user()->profile_photo_path != null) src="/storage/{{ Auth::user()->profile_photo_path }}" @else src="{{ $user->profile_photo_url }}" @endif alt="Perfil"></a>
+                        <a onclick="event.preventDefault(); conf_mini()" href="#" ><img class="imgperfil" style="float: right; font-size: 15px; border-radius: 50%; margin: 5px 10px;" @if(Auth::user()->profile_photo_path != null) src="/img/{{ Auth::user()->profile_photo_path }}" @else src="{{ $user->profile_photo_url }}" @endif alt="Perfil"></a>
                         <div class="card col-md-12" id="config">
 
-                            <img class="imgconfig" style="border-radius: 50%; margin: 5px 35px;" @if(Auth::user()->profile_photo_path != null) src="/storage/{{ Auth::user()->profile_photo_path }}" @else src="{{ $user->profile_photo_url }}" @endif alt="Perfil">
+                            <img class="imgconfig" style="border-radius: 50%; margin: 5px 35px;" @if(Auth::user()->profile_photo_path != null) src="/img/{{ Auth::user()->profile_photo_path }}" @else src="{{ $user->profile_photo_url }}" @endif alt="Perfil">
                             <ul>
                                 <li><a href="/user/profile">Meu Perfil</a></li>
                                 <li><a href="/favorito">Favoritos</a></li>
