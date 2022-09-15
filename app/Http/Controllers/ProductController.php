@@ -471,7 +471,7 @@ class ProductController extends Controller
             $pedido->save();
         }
 
-        return redirect('/pedidos/abertos');
+        return redirect('/meus/pedidos');
 
     }
 
