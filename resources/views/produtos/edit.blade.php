@@ -49,7 +49,7 @@
         <h1>Editando: {{ $product->title }}</h1>
         @if($user->adms > 0)
         <h5>URL Pagamento aprovado:<br>
-            http://127.0.0.1:8000/api/pagamento/aprovado/{{$product->id}}</h5>
+            https://3dprintevolution.com/api/pagamento/aprovado/{{$product->id}}</h5>
         @endif
         <form action="/product/update/{{ $product->id }}" method="POST" enctype="multipart/form-data">
             @csrf
