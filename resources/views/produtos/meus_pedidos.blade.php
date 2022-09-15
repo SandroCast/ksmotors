@@ -55,11 +55,19 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td scropt="row" class="align-middle">Produto </td>
+                        <td scropt="row" class="align-middle">{{$pedido->produto->title}}</td>
+                    </tr>
+                    <tr>
+                        <td scropt="row" class="align-middle">Preço </td>
+                        <td scropt="row" class="align-middle">{{'R$'.number_format($pedido->produto->preco, 2, ',', '.')}}</td>
+                    </tr>
+                    <tr>
                         <td scropt="row" class="align-middle">Status </td>
                         <td scropt="row" class="align-middle">{{$pedido->status}}</td>
                     </tr>
                     <tr>
-                        <td scropt="row" class="align-middle">Data </td>
+                        <td scropt="row" class="align-middle">Data Pedido</td>
                         <td scropt="row" class="align-middle">{{$pedido->created_at}}</td>
                     </tr>
                     <tr>
@@ -68,11 +76,12 @@
                                 <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js"
                                 data-preference-id="{{$pedido->produto->token_pagamento}}" data-source="button">
                                 </script>
+                                <a href="/analizar/pagamento/aprovado/{{$pedido->id}}" class="btn btn-success edit-btn">Já Paguei</a>
                             @endif
                         </td>
                         <td scropt="row" style="text-align: end">
                             @if($pedido->status != 'Cancelado' && $pedido->status != 'Entregue')
-                                <a href="/cancela/pedido/{{$pedido->id}}" style="margin-right: 5px;" class="btn btn-danger edit-btn"><ion-icon name="close"></ion-icon> Cancelar Pedido</a>
+                                <a href="/cancela/pedido/{{$pedido->id}}" style="margin-right: 5px;" class="btn btn-danger edit-btn"> Cancelar Pedido</a>
                             @endif
                         </td>
                     </tr>

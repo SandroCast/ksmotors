@@ -80,6 +80,14 @@ Route::get('/api/inicia/conversa/{id}', [MessageController::class, 'apiIniciaCon
 Route::get('/api/envia/mensagem', [MessageController::class, 'apiEnviaMensagens']);
 Route::get('/api/visualiza/mensagem', [MessageController::class, 'apiVisualizaMensagens']);
 
-Route::get('/teste/api', [MessageController::class, 'apiMensagens']);
 
+Route::get('/api/pagamento/aprovado/{id}', [ProductController::class, 'pagamentoAprovado'])->middleware('auth');
+
+Route::get('/analizar/pagamento/aprovado/{id}', [ProductController::class, 'analizarPagamentoAprovado'])->middleware('auth');
+
+Route::get('/pagamento/recebido/{id}', [ProductController::class, 'pagamentoRecebido'])->middleware('auth');
+
+Route::get('/pedido/a/caminho/{id}', [ProductController::class, 'pedidoaCaminho'])->middleware('auth');
+
+Route::get('/pedido/entregue/{id}', [ProductController::class, 'pedidoEntregue'])->middleware('auth');
 

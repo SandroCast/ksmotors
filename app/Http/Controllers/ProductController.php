@@ -458,6 +458,83 @@ class ProductController extends Controller
 
     }
 
+
+
+    public function pagamentoAprovado($id, Request $request)
+    {
+        $user = auth()->user();
+
+        $pedido = VendaProduto::where('status', 'Aguardando Pagamento')->where('id_produto', $id)->where('id_user', $user->id)->first();
+    
+        if($pedido){
+            $pedido->status = 'Análisando Pagamento';
+            $pedido->save();
+        }
+
+        return redirect('/pedidos/abertos');
+
+    }
+
+    public function analizarPagamentoAprovado($id, Request $request)
+    {
+        $user = auth()->user();
+
+        $pedido = VendaProduto::findOrFail($id);
+
+        if($user->id == $pedido->id_user){
+            $pedido->status = 'Análisando Pagamento';
+            $pedido->save();
+        }
+
+        return redirect()->back();
+
+    }
+    
+    public function pagamentoRecebido($id, Request $request)
+    {
+        $user = auth()->user();
+        $pedido = VendaProduto::findOrFail($id);
+
+        if($user->adms > 0){
+            $pedido->status = 'Preparando Envio';
+            $pedido->save();
+
+        }
+
+        return redirect()->back();
+
+    }
+
+    public function pedidoaCaminho($id, Request $request)
+    {
+        $user = auth()->user();
+        $pedido = VendaProduto::findOrFail($id);
+
+        if($user->adms > 0){
+            $pedido->status = 'A Caminho';
+            $pedido->save();
+
+        }
+
+        return redirect()->back();
+
+    }
+
+    public function pedidoEntregue($id, Request $request)
+    {
+        $user = auth()->user();
+        $pedido = VendaProduto::findOrFail($id);
+
+        if($user->adms > 0){
+            $pedido->status = 'Entregue';
+            $pedido->save();
+
+        }
+
+        return redirect()->back();
+
+    }
+    
     
     
 

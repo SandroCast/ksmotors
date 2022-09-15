@@ -47,10 +47,10 @@
 
     <div id="product-create-container" class="col-md-6 offset-md-3">
         <h1>Editando: {{ $product->title }}</h1>
-        <h5>URL Processando Pagamento:<br>
-            /teste/{{$product->id}}</h5>
-        <h5>URL Pagamento Finalizado:<br>
-            /teste2/{{$product->id}}</h5>
+        @if($user->adms > 0)
+        <h5>URL Pagamento aprovado:<br>
+            http://127.0.0.1:8000/api/pagamento/aprovado/{{$product->id}}</h5>
+        @endif
         <form action="/product/update/{{ $product->id }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
