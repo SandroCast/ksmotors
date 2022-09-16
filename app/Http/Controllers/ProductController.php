@@ -311,13 +311,13 @@ class ProductController extends Controller
             //$mail->isMail();                                      // Set mailer to use SMTP
             $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;                               // Enable SMTP authentication
-            $mail->Username = 'castrosandro2@gmail.com';                 // SMTP username
-            $mail->Password = 'ohelcnugpanbdeqh';                           // SMTP password
+            $mail->Username = 'sandrocastro2555@gmail.com';                 // SMTP username
+            $mail->Password = 'phrwobvfwhhsmyzm';                           // SMTP password
             $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
             $mail->Port = 587;                                    // TCP port to connect to
 
             //Recipients
-            $mail->setFrom('castrosandro2@gmail.com', '3DPrintEvolution');
+            $mail->setFrom('sandrocastro2555@gmail.com', '3DPrintEvolution');
 
             $mail->addAddress($email);               // Name is optional
             //$mail->addReplyTo('info@example.com', 'Information');
