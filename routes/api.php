@@ -21,8 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function(){
 
-    Route::get('/teste', [FreeApi::class, 'index']);
     Route::post('/salvar', [FreeApi::class, 'salvar']);
 });
 
+Route::get('/teste', [FreeApi::class, 'index']);
 Route::post('/login', [FreeApi::class, 'login']);
