@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,12 @@ use Illuminate\Support\Facades\Mail;
 
 use App\Models\Product;
 
-Route::get('/', [ProductController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
+
+
+
+
+
 Route::get('/product/create', [ProductController::class, 'create'])->middleware('auth');
 
 Route::get('/favorito', [ProductController::class, 'favorito'])->middleware('auth');
