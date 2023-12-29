@@ -51,7 +51,7 @@
             <input id="inp4" onkeydown="digitar4()" style="width: 40px; text-align: center; display: inline;" type="text" class="form-control" name="codigo_4" maxlength="1" required>
         </div>
         @php
-            $tentativas = 3 - $user->erro_verificacao;
+            $tentativas = 3 - auth()->user()->erro_verificacao;
         @endphp
         <p style="color: green">Retam {{$tentativas}} tentativas</p>
         
