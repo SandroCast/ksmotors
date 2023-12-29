@@ -39,7 +39,7 @@
     <body>
 
         {{--  verificação do email  --}}
-        @if(isset($user) && $user->email_verificado == null)
+        @if(auth()->user() && auth()->user()->email_verificado == null)
             @include('auth.verifica-ativacao')
         @else
 
