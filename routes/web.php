@@ -26,6 +26,7 @@ Route::get('/', [HomeController::class, 'index']);
 
 
 
+
 Route::get('/product/create', [ProductController::class, 'create'])->middleware('auth');
 
 Route::get('/favorito', [ProductController::class, 'favorito'])->middleware('auth');
@@ -43,7 +44,7 @@ Route::get('/product/favorite/{id}', [ProductController::class, 'favorito_novo']
 
 Route::delete('/product/favorite/remove/{id}', [ProductController::class, 'favorito_remover'])->middleware('auth');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [ProductController::class, 'index'])->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 Route::get('/usuarios', [ProductController::class, 'usuarios'])->middleware('auth');
 

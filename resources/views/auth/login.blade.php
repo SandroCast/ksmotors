@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <img id="imgfundo" src="/img/fundo.png" alt="" style="height: 100%; position: absolute; opacity : 0.9;">
+    {{-- <img id="imgfundo" src="/img/fundo.png" alt="" style="height: 100%; position: absolute; opacity : 0.9;"> --}}
 
     <style>
         .w-full{
@@ -14,7 +14,7 @@
     </style>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            {{--  <x-jet-authentication-card-logo />  --}}
+             <x-jet-authentication-card-logo /> 
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
@@ -24,6 +24,9 @@
                 {{ session('status') }}
             </div>
         @endif
+
+        <div style="text-align: center; font-size: 30px; color: cornflowerblue; font-weight: 700">KSmotors</div>
+        <br><br>
 
         <form method="POST" action="{{ route('login') }}">
             @csrf

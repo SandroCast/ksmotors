@@ -14,7 +14,7 @@
             margin-bottom: 20px; /* Espaço abaixo dos cards */
         }
 
-        .card {
+        .cardContainer > .card {
             width: 18rem;
             display: inline-block;
             margin-right: 10px;
@@ -26,7 +26,7 @@
             height: 380px;
         }
 
-        .card:hover {
+        .cardContainer > .card:hover {
             transform: scale(1.03); /* Efeito de escala ao passar o mouse */
         }
 

@@ -24,6 +24,11 @@ body {
     background-color: black !important;
 }
 
+#footer{
+    background-color: white;
+
+}
+
 #partesuperior > a{
     text-decoration: none;
     padding: 5px 15px;
@@ -129,4 +134,52 @@ body {
 
 #conteudo{
     padding-top: 50px;
+}
+
+#botao-entrar{
+    text-decoration: none; 
+    color: #6495ed; 
+    border: solid 2px #6495ed;
+}
+
+#botao-entrar:hover{
+    background-color: #c2d7ff;
+    color: #1d64e7; 
+    transform: scale(1.07);
+}
+
+.redes-sociais {
+    padding-left: 50px;
+}
+
+.redes-sociais > a > img {
+    width: 30px;
+    margin: 0 2px 0 2px;
+    display: inline;
+}
+
+#config-perfil {
+    position: fixed;
+    margin: 8px 0 0 -150px;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+@media (max-width: 992px) {
+    #div-img-perfil {
+        margin: 10px 10px 0px 0px !important;
+        width: 100% !important;
+    }
+    #div-width-phone{
+        border-top: solid 1px #c0c0c0 !important;
+        padding-top: 10px !important;
+    }
+    #div-nome-user{
+        display: inline !important;
+        color: #555 !important;
+    }
+    #config-perfil {
+        margin: -250px 0 0 0 !important;
+    }
 }

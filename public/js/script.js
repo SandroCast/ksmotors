@@ -1,42 +1,45 @@
-window.addEventListener('scroll', function(){
+function alternarVisibilidade(event) {
+    event.preventDefault();
+    var minhaDiv = document.getElementById('config-perfil');
 
-    var windowTop = window.pageYOffset;
-    if(windowTop > 300) {
-        var navtop = window.document.getElementById('navbartop');
-        navtop.style.marginTop = '-35px'
-        navtop.style.backgroundColor = 'black'
-        navtop.style.transition = '500ms'
-    }else{
-            var navtop = window.document.getElementById('navbartop');
-            navtop.style.marginTop = '0px'
-            navtop.style.backgroundColor = '#00000000'
-            navtop.style.transition = '500ms'
-
+    // Alterna a visibilidade da div
+    if (minhaDiv) {
+        if (minhaDiv.hasAttribute('hidden')) {
+            minhaDiv.removeAttribute('hidden');
+        } else {
+            minhaDiv.setAttribute('hidden', 'true');
+        }
     }
 
-
-})
-
-function srl(click){
-    document.getElementById(click).scrollIntoView(true);
+    // Impede a propagação do clique para evitar a execução do evento de fechamento
+    event.stopPropagation();
 }
 
-window.addEventListener('click', function(){
+document.addEventListener('DOMContentLoaded', function() {
+    var minhaDiv = document.getElementById('config-perfil');
 
-    var conf = window.document.getElementById('config');
+    // Adiciona um ouvinte de evento ao documento para cliques fora da div
+    document.addEventListener('click', function(event) {
+        var clicouDentro = minhaDiv && minhaDiv.contains(event.target);
 
-    if(conf.style.display == 'flex') {
-        conf.style.display = 'block'
-    }else {
-        conf.style.display = 'none'
+        // Se o clique ocorreu fora da div e a div está visível, oculta a div
+        if (!clicouDentro && minhaDiv && !minhaDiv.hasAttribute('hidden')) {
+            minhaDiv.setAttribute('hidden', 'true');
+        }
+    });
+
+    // Adiciona um ouvinte de evento ao botão para evitar a propagação do clique
+    if (minhaDiv) {
+        minhaDiv.addEventListener('click', function(event) {
+            event.stopPropagation(); // Impede que o clique na div seja propagado para o documento
+        });
     }
-})
 
-function conf_mini(){
-
-    var conf = window.document.getElementById('config');
-    if(conf.style.display == 'block') {
-    }else {
-        conf.style.display = 'flex'
-    }
-}
+    // Adiciona um ouvinte de evento de rolagem ao documento
+    window.addEventListener('scroll', function() {
+        // Oculta a div se ela estiver visível
+        if (minhaDiv && !minhaDiv.hasAttribute('hidden')) {
+            minhaDiv.setAttribute('hidden', 'true');
+        }
+    });
+});

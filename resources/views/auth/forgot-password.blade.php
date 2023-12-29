@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <img id="imgfundo" src="/img/fundo.png" alt="" style="height: 100%; position: absolute; opacity : 0.9;">
+    {{-- <img id="imgfundo" src="/img/fundo.png" alt="" style="height: 100%; position: absolute; opacity : 0.9;"> --}}
 
     <style>
         .w-full{
@@ -16,6 +16,9 @@
         <x-slot name="logo">
             <x-jet-authentication-card-logo />
         </x-slot>
+
+        <div style="text-align: center; font-size: 30px; color: cornflowerblue; font-weight: 700">KSmotors</div>
+        <br>
 
         <div class="mb-4 text-sm text-gray-600">
             {{ __('Esqueceu sua senha? Sem problemas. Basta nos informar seu endereço de e-mail e nós lhe enviaremos um link de redefinição de senha que permitirá que você escolha uma nova.') }}
