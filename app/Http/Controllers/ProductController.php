@@ -317,7 +317,7 @@ class ProductController extends Controller
             $mail->Port = 587;                                    // TCP port to connect to
 
             //Recipients
-            $mail->setFrom('sandrocastro2555@gmail.com', '3DPrintEvolution');
+            $mail->setFrom('sandrocastro2555@gmail.com', 'KSmotors');
 
             $mail->addAddress($email);               // Name is optional
             //$mail->addReplyTo('info@example.com', 'Information');
